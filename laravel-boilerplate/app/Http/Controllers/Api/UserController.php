@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -17,17 +18,23 @@ class UserController extends Controller
         $search = $request->search['value'];
         $order = $request->order[0]['column'] ?? null;
         $sort_order = $request->order[0]['dir'] ?? null;
+        $filter = $request->search['regex'];
+        $sort_query = null;
         if ($order) {
             $sort_query = $request->columns[$order]['data'];
         }
-        if (!empty($search)) {
-            dd($search);
+        $start_number = intval((int)$start * (int)$length);
+        if(!empty($search)) {
+            $user_data = User::where('name', 'like', '%' . $search . '%')->orWhere('email','like','%' . $search . '%')->skip($start_number)->take((int)$length)->get();
         }else {
-            if (!empty($sort_order) && $sort_order == 'asc') {
-                $user_data = User::get();
+            if (!empty($sort_order)) {
+                $user_data = User::orderBy($sort_query,$sort_order)->skip($start_number)->take((int)$length)->get();
             }else{
-                $user_data = User::get();
+                $user_data = User::orderBy('created_at','desc')->skip($start_number)->take((int)$length)->get();
             }
+        }
+        if($filter == "filter"){
+            $user_data = User::whereMonth('created_at','=',$search)->skip($start_number)->take((int)$length)->get();
         }
         $count = User::get()->count();
         $data = [

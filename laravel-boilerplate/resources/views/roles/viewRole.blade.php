@@ -5,7 +5,12 @@
 @section('content')
 <!--begin::Content wrapper-->
  <div class="d-flex flex-column flex-column-fluid">
-
+    <script>
+        toastr.options.timeOut = 4000;
+        @if (Session::has('error'))
+            toastr.error('{{ Session::get('error') }}');
+        @endif
+    </script>
      <!--begin::Toolbar-->
      <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
 
@@ -125,6 +130,7 @@
                                 <!--begin::Card footer-->
                                 <div class="card-footer pt-0">
                                     <button type="button" class="btn btn-light btn-active-primary" id="role_data_update_btn" data-id="{{ $item['id'] }}">Edit Role</button>
+                                    <button type="button" class="btn btn-light btn-active-primary" id="role_data_delete_btn" data-id="{{ $item['id'] }}">Delete</button>
                                 </div>
                                 <!--end::Card footer-->
                             </div>

@@ -124,12 +124,8 @@
 										<!--begin::Tabs-->
 										<ul class="nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-semibold px-9">
 											<li class="nav-item">
-												<a class="nav-link text-white opacity-75 opacity-state-100 pb-4"
-													data-bs-toggle="tab" href="#kt_topbar_notifications_1">Alerts</a>
-											</li>
-											<li class="nav-item">
 												<a class="nav-link text-white opacity-75 opacity-state-100 pb-4 active"
-													data-bs-toggle="tab" href="#kt_topbar_notifications_2">Updates</a>
+													data-bs-toggle="tab" href="#kt_topbar_notifications_1">Alerts</a>
 											</li>
 											<li class="nav-item">
 												<a class="nav-link text-white opacity-75 opacity-state-100 pb-4"
@@ -142,7 +138,7 @@
 									<!--begin::Tab content-->
 									<div class="tab-content">
 										<!--begin::Tab panel-->
-										<div class="tab-pane fade" id="kt_topbar_notifications_1" role="tabpanel">
+										<div class="tab-pane fade show active" id="kt_topbar_notifications_1" role="tabpanel">
 											<!--begin::Items-->
 											<div class="scroll-y mh-325px my-5 px-8">
 												<!--begin::Item-->
@@ -447,40 +443,6 @@
 												</a>
 											</div>
 											<!--end::View more-->
-										</div>
-										<!--end::Tab panel-->
-										<!--begin::Tab panel-->
-										<div class="tab-pane fade show active" id="kt_topbar_notifications_2"
-											role="tabpanel">
-											<!--begin::Wrapper-->
-											<div class="d-flex flex-column px-9">
-												<!--begin::Section-->
-												<div class="pt-10 pb-0">
-													<!--begin::Title-->
-													<h3 class="text-dark text-center fw-bold">Get Pro Access</h3>
-													<!--end::Title-->
-													<!--begin::Text-->
-													<div class="text-center text-gray-600 fw-semibold pt-1">Outlines
-														keep you honest. They stoping you from amazing poorly about
-														drive</div>
-													<!--end::Text-->
-													<!--begin::Action-->
-													<div class="text-center mt-5 mb-9">
-														<a href="#" class="btn btn-sm btn-primary px-6"
-															data-bs-toggle="modal"
-															data-bs-target="#kt_modal_upgrade_plan">Upgrade</a>
-													</div>
-													<!--end::Action-->
-												</div>
-												<!--end::Section-->
-												<!--begin::Illustration-->
-												<div class="text-center px-4">
-													<img class="mw-100 mh-200px" alt="image"
-														src="{{ asset('/assets/media/illustrations/sketchy-1/1.png') }}" />
-												</div>
-												<!--end::Illustration-->
-											</div>
-											<!--end::Wrapper-->
 										</div>
 										<!--end::Tab panel-->
 										<!--begin::Tab panel-->
@@ -927,7 +889,7 @@
 								<div class="cursor-pointer symbol symbol-30px symbol-md-40px"
 									data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
 									data-kt-menu-placement="bottom-end">
-									<img src="{{ asset('/assets/media/avatars/300-1.jpg') }}" alt="user" />
+									<img src="@if(empty(auth()->user()->profile_picture)){{ asset('/assets/media/svg/avatars/blank.svg') }}@else {{ auth()->user()->profile_picture }}@endif" alt="user" />
 								</div>
 								<!--begin::User account menu-->
 								<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -937,17 +899,17 @@
 										<div class="menu-content d-flex align-items-center px-3">
 											<!--begin::Avatar-->
 											<div class="symbol symbol-50px me-5">
-												<img alt="Logo" src="{{ asset('/assets/media/avatars/300-1.jpg') }}" />
+												<img alt="Logo" src="@if(empty(auth()->user()->profile_picture)){{ asset('/assets/media/svg/avatars/blank.svg') }}@else {{ auth()->user()->profile_picture }}@endif" />
 											</div>
 											<!--end::Avatar-->
 											<!--begin::Username-->
 											<div class="d-flex flex-column">
-												<div class="fw-bold d-flex align-items-center fs-5">Max Smith
+												<div class="fw-bold d-flex align-items-center fs-5">{{ auth()->user()->name }}
 													<span
 														class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span>
 												</div>
 												<a href="#"
-													class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
+													class="fw-semibold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
 											</div>
 											<!--end::Username-->
 										</div>
@@ -958,150 +920,14 @@
 									<!--end::Menu separator-->
 									<!--begin::Menu item-->
 									<div class="menu-item px-5">
-										<a href="overview.html" class="menu-link px-5">My Profile</a>
-									</div>
-									<!--end::Menu item-->
-									<!--begin::Menu item-->
-									<div class="menu-item px-5">
-										<a href="list.html" class="menu-link px-5">
-											<span class="menu-text">My Projects</span>
-											<span class="menu-badge">
-												<span
-													class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
-											</span>
-										</a>
-									</div>
-									<!--end::Menu item-->
-									<!--begin::Menu item-->
-									<div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-										data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
-										<a href="#" class="menu-link px-5">
-											<span class="menu-title">My Subscription</span>
-											<span class="menu-arrow"></span>
-										</a>
-										<!--begin::Menu sub-->
-										<div class="menu-sub menu-sub-dropdown w-175px py-4">
-											<!--begin::Menu item-->
-											<div class="menu-item px-3">
-												<a href="referrals.html" class="menu-link px-5">Referrals</a>
-											</div>
-											<!--end::Menu item-->
-											<!--begin::Menu item-->
-											<div class="menu-item px-3">
-												<a href="billing.html" class="menu-link px-5">Billing</a>
-											</div>
-											<!--end::Menu item-->
-											<!--begin::Menu item-->
-											<div class="menu-item px-3">
-												<a href="statements.html" class="menu-link px-5">Payments</a>
-											</div>
-											<!--end::Menu item-->
-											<!--begin::Menu item-->
-											<div class="menu-item px-3">
-												<a href="statements.html"
-													class="menu-link d-flex flex-stack px-5">Statements
-													<i class="fas fa-exclamation-circle ms-2 fs-7"
-														data-bs-toggle="tooltip" title="View your statements"></i></a>
-											</div>
-											<!--end::Menu item-->
-											<!--begin::Menu separator-->
-											<div class="separator my-2"></div>
-											<!--end::Menu separator-->
-											<!--begin::Menu item-->
-											<div class="menu-item px-3">
-												<div class="menu-content px-3">
-													<label
-														class="form-check form-switch form-check-custom form-check-solid">
-														<input class="form-check-input w-30px h-20px" type="checkbox"
-															value="1" checked="checked" name="notifications" />
-														<span
-															class="form-check-label text-muted fs-7">Notifications</span>
-													</label>
-												</div>
-											</div>
-											<!--end::Menu item-->
-										</div>
-										<!--end::Menu sub-->
-									</div>
-									<!--end::Menu item-->
-									<!--begin::Menu item-->
-									<div class="menu-item px-5">
-										<a href="statements.html" class="menu-link px-5">My Statements</a>
+										<a href="{{ route('user_auth.index') }}" class="menu-link px-5">My Profile</a>
 									</div>
 									<!--end::Menu item-->
 									<!--begin::Menu separator-->
 									<div class="separator my-2"></div>
-									<!--end::Menu separator-->
-									<!--begin::Menu item-->
-									<div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-										data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
-										<a href="#" class="menu-link px-5">
-											<span class="menu-title position-relative">Language
-												<span
-													class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
-													<img class="w-15px h-15px rounded-1 ms-2"
-														src="{{ asset('assets/media/flags/united-states.svg')}}"
-														alt="" /></span></span>
-										</a>
-										<!--begin::Menu sub-->
-										<div class="menu-sub menu-sub-dropdown w-175px py-4">
-											<!--begin::Menu item-->
-											<div class="menu-item px-3">
-												<a href="settings.html" class="menu-link d-flex px-5 active">
-													<span class="symbol symbol-20px me-4">
-														<img class="rounded-1"
-															src="{{ asset('assets/media/flags/united-states.svg')}}" alt="" />
-													</span>English</a>
-											</div>
-											<!--end::Menu item-->
-											<!--begin::Menu item-->
-											<div class="menu-item px-3">
-												<a href="settings.html" class="menu-link d-flex px-5">
-													<span class="symbol symbol-20px me-4">
-														<img class="rounded-1" src="{{ asset('assets/media/flags/spain.svg')}}"
-															alt="" />
-													</span>Spanish</a>
-											</div>
-											<!--end::Menu item-->
-											<!--begin::Menu item-->
-											<div class="menu-item px-3">
-												<a href="settings.html" class="menu-link d-flex px-5">
-													<span class="symbol symbol-20px me-4">
-														<img class="rounded-1" src="{{ asset('assets/media/flags/germany.svg')}}"
-															alt="" />
-													</span>German</a>
-											</div>
-											<!--end::Menu item-->
-											<!--begin::Menu item-->
-											<div class="menu-item px-3">
-												<a href="settings.html" class="menu-link d-flex px-5">
-													<span class="symbol symbol-20px me-4">
-														<img class="rounded-1" src="{{ asset('assets/media/flags/japan.svg')}}"
-															alt="" />
-													</span>Japanese</a>
-											</div>
-											<!--end::Menu item-->
-											<!--begin::Menu item-->
-											<div class="menu-item px-3">
-												<a href="settings.html" class="menu-link d-flex px-5">
-													<span class="symbol symbol-20px me-4">
-														<img class="rounded-1" src="{{ asset('assets/media/flags/france.svg')}}"
-															alt="" />
-													</span>French</a>
-											</div>
-											<!--end::Menu item-->
-										</div>
-										<!--end::Menu sub-->
-									</div>
-									<!--end::Menu item-->
-									<!--begin::Menu item-->
-									<div class="menu-item px-5 my-1">
-										<a href="settings.html" class="menu-link px-5">Account Settings</a>
-									</div>
-									<!--end::Menu item-->
 									<!--begin::Menu item-->
 									<div class="menu-item px-5">
-										<a href="sign-in.html"
+										<a href="{{ route('logout') }}"
 											class="menu-link px-5">Sign Out</a>
 									</div>
 									<!--end::Menu item-->
@@ -2323,13 +2149,7 @@
 								<!--end::Details-->
 							</div>
 							<!--end::User-->
-							<!--begin::Text-->
-							<div class="p-5 rounded bg-light-info text-dark fw-semibold mw-lg-400px text-start"
-								data-kt-element="message-text">You can unwatch this repository immediately by clicking
-								here:
-								<a href="https://keenthemes.com/">Keenthemes.com</a>
-							</div>
-							<!--end::Text-->
+
 						</div>
 						<!--end::Wrapper-->
 					</div>
@@ -7602,7 +7422,6 @@
 	<script src="{{ asset('/assets/js/custom/utilities/modals/create-app.js') }}"></script>
 	<script src="{{ asset('/assets/js/custom/utilities/modals/new-target.js') }}"></script>
 	<script src="{{ asset('/assets/js/custom/utilities/modals/users-search.js') }}"></script>
-	<script src="{{ asset('/assets/js/custom/apps/customers/list/export.js') }}"></script>
 	<script src="{{ asset('/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 
 	@yield('script_file')

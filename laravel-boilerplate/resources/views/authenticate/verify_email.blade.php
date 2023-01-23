@@ -4,8 +4,8 @@
 <head>
     <title>Weboccult | Two-Steps</title>
     <meta charset="utf-8" />
-        
-        
+
+
     <link rel="shortcut icon" href="assets/media/logos/default-small.png" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -43,7 +43,7 @@
 						<!--begin::Image-->
 						<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="{{ asset('assets/media/auth/boy-verify-email-light.png') }}" alt="" />
 						<!--end::Image-->
-						
+
 					</div>
 					<!--end::Content-->
 				</div>
@@ -71,7 +71,7 @@
 									<!--begin::Sub-title-->
 									<div class="text-muted fw-semibold fs-5 mb-5">Account activation link sent to your email address: hello@example.com Please follow the link inside to continue.</div>
 									<!--end::Sub-title-->
-									
+
 								</div>
 								<!--end::Heading-->
 								<!--begin::Section-->
@@ -95,7 +95,7 @@
 								<div class="d-flex flex-center">
 									<button type="submit" class="btn btn-lg btn-primary fw-bold">
 										<span class="indicator-label">Submit</span>
-										<span class="indicator-progress">Please wait... 
+										<span class="indicator-progress">Please wait...
 										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 									</button>
 								</div>
@@ -105,8 +105,7 @@
 							<!--begin::Notice-->
 							<div class="text-center fw-semibold fs-5">
 								<span class="text-muted me-1">Didn’t get the code ?</span>
-								<a href="#" class="link-primary fs-5 me-1">Resend</a>
-								
+								<a href="{{ route('login') }}" class="link-primary fs-5 me-1">Back to login</a>
 							</div>
 							<!--end::Notice-->
 						</div>
@@ -114,11 +113,11 @@
 					</div>
 					<!--end::Form-->
 					<!--begin::Footer-->
-					
+
 					<!--end::Footer-->
 				</div>
 				<!--end::Body-->
-				
+
 			</div>
 			<!--end::Authentication - Two-stes-->
 		</div>

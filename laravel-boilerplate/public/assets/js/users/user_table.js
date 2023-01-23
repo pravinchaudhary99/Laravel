@@ -13,16 +13,6 @@ $(document).ready(function(){
             },
         },
         "columns":[
-            {
-                data:'id',
-                orderable:false,
-                "render": function (data, type, row, meta) {
-                    var html = `<div class="form-check form-check-sm form-check-custom form-check-solid">
-                            <input class="form-check-input" type="checkbox" value="1" />
-                        </div>`
-                    return html
-                }
-            },
             {data:'name'},
             {data:'email'},
             {
@@ -48,7 +38,7 @@ $(document).ready(function(){
                                             <path d="M12.9,2 C13.4522847,2 13.9,2.44771525 13.9,3 C13.9,3.55228475 13.4522847,4 12.9,4 L6,4 C4.8954305,4 4,4.8954305 4,6 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,6 C2,3.790861 3.790861,2 6,2 L12.9,2 Z" fill="currentColor" fill-rule="nonzero" opacity="0.3"/>
                                         </g>
                                     </svg><!--end::Svg Icon--></span></a>
-                                <a href="view.html" class="px-2" title="Delete"><span class="svg-icon svg-icon-1"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo8/dist/../src/media/svg/icons/Home/Trash.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <a href="javascript:void(0)" class="px-2 delete_user_data" data-id="${row.id}" title="Delete" ><span class="svg-icon svg-icon-1"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo8/dist/../src/media/svg/icons/Home/Trash.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24"/>
                                         <path d="M6,8 L18,8 L17.106535,19.6150447 C17.04642,20.3965405 16.3947578,21 15.6109533,21 L8.38904671,21 C7.60524225,21 6.95358004,20.3965405 6.89346498,19.6150447 L6,8 Z M8,10 L8.45438229,14.0894406 L15.5517885,14.0339036 L16,10 L8,10 Z" fill="currentColor" fill-rule="nonzero"/>
@@ -64,8 +54,25 @@ $(document).ready(function(){
     });
     const filterSearch = document.querySelector('[data-kt-customer-table-filter="search"]');
     filterSearch.addEventListener('keyup', function (e) {
+        user_table.search("",false).draw();
         user_table.search(e.target.value).draw();
     });
 
+    const filterButton = document.querySelector('[data-kt-customer-table-filter="filter"]');
+
+        // Filter datatable on submit
+        filterButton.addEventListener('click', function () {
+            // Get filter values
+            const monthValue = $("#select_month").val();
+            // Build filter string from filter options
+            const filterString = monthValue;
+            // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
+            console.log(filterString,"filterString");
+            if (filterString == "") {
+                user_table.search(filterString,false).draw();
+            }else{
+                user_table.search(filterString,'filter').draw();
+            }
+        });
 
 });

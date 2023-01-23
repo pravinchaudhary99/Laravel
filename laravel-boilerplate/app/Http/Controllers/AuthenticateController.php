@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -96,7 +97,7 @@ class AuthenticateController extends Controller
         if (empty($user)) {
             return redirect()->back()->withInput()->with('error','User Not created');
         }
-        return redirect()->route('login.index');
+        return redirect()->route('login');
     }
 
     public function forgot(Request $request)
@@ -132,7 +133,7 @@ class AuthenticateController extends Controller
                 'email_verified_at' => Carbon::now()
             ]);
             VerifyEmail::where('email',$email)->delete();
-            return redirect()->route('login.index');
+            return redirect()->route('login');
         }else{
             return view('authenticate.verify_email',compact('verify_id'))->with('error','please enter correct otp');
         }
@@ -173,5 +174,12 @@ class AuthenticateController extends Controller
             'new_password' => 'required',
             'confirm_password' => 'required|same:new_password'
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        Session::flush();
+        return redirect()->route('login');
     }
 }

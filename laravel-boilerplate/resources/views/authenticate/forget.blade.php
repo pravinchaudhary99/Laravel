@@ -4,8 +4,8 @@
 <head>
     <title>Weboccult</title>
     <meta charset="utf-8" />
-        
-        
+
+
     <link rel="shortcut icon" href="assets/media/logos/default-small.png" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -21,7 +21,7 @@
 	<!--end::Head-->
 	<!--begin::Body-->
 	<body id="kt_body" class="app-blank app-blank">
-		
+
 		<!--begin::Root-->
 		<div class="d-flex flex-column flex-root" id="kt_app_root">
 			<!--begin::Authentication - Password reset -->
@@ -57,17 +57,17 @@
 										<span class="indicator-label">Submit</span>
 										<!--end::Indicator label-->
 										<!--begin::Indicator progress-->
-										<span class="indicator-progress">Please wait... 
+										<span class="indicator-progress">Please wait...
 										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 										<!--end::Indicator progress-->
 									</button>
-									
+
 								</div>
 								<!--end::Actions-->
 								<!--begin::Notice-->
 								<div class="text-center fw-semibold fs-5">
 									<span class="text-muted me-1"><i class="fa fa-chevron-left" style="color: #dd1845;"></i></span>
-									<a href="#" class="link-primary fs-5 me-1">Back to login</a>
+									<a href="{{ route('login') }}" class="link-primary fs-5 me-1">Back to login</a>
 								</div>
 								<!--end::Notice-->
 							</form>
@@ -91,7 +91,7 @@
 						<!--begin::Image-->
 						<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="{{ asset('assets/media/auth/girl-unlock-password-light.png') }}" alt="" />
 						<!--end::Image-->
-						
+
 					</div>
 					<!--end::Content-->
 				</div>

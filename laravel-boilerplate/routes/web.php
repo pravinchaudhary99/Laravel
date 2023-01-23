@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\AuthenticateController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +18,7 @@ use App\Http\Controllers\User\UserController;
 
 
 
-Route::get('/login',[AuthenticateController::class, 'index'])->name('login.index');
+Route::get('/login',[AuthenticateController::class, 'index'])->name('login');
 Route::post('/login',[AuthenticateController::class, 'login'])->name('login.create');
 Route::get('/register',[AuthenticateController::class, 'register'])->name('register.index');
 Route::post('/register',[AuthenticateController::class, 'register_create'])->name('register.create');
@@ -26,7 +27,7 @@ Route::get('/verify-email', [AuthenticateController::class, 'verify_email'])->na
 Route::post('/verify-email', [AuthenticateController::class, 'verify_email_create'])->name('verify-email.create');
 Route::get('/verify-otp', [AuthenticateController::class, 'verify_otp'])->name('verify-otp');
 Route::post('/verify-otp', [AuthenticateController::class, 'verify_otp_check'])->name('verify-otp.check');
-
+Route::get('/logout',[AuthenticateController::class,'logout'])->name('logout')->middleware('auth');
 
 Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::get('/', function () {$home = true; return view('index',compact('home')); })->name('home.index');
@@ -38,13 +39,21 @@ Route::group(['middleware'=>'auth','prefix'=>'roles','as'=>'roles.'],function ()
     Route::post('/create',[RoleController::class,'create'])->name('create');
     Route::get('/view/{id}',[RoleController::class ,'role_view'])->name('view');
     Route::put('/update/{id}',[RoleController::class ,'update'])->name('update');
+    Route::delete('/delete/{id}',[RoleController::class,'delete'])->name('delete');
 });
 
 
 Route::group(['middleware'=>'auth','prefix'=>'users','as'=>'users.'],function () {
     Route::get('/',[UserController::class,'index'])->name('index');
-    Route::get('/view/{id}',[UserController::class,'update'])->name('update');
+    Route::post('/create',[UserController::class,'create'])->name('create');
+    Route::get('/view/{id}',[UserController::class,'edit'])->name('edit');
+    Route::put('/update/{id}',[UserController::class,'update'])->name('update');
+    Route::delete('/delete/{id}',[UserController::class,'delete'])->name('delete');
 });
 
-
+Route::group(['middleware' => 'auth','prefix'=>'user_auth','as'=>'user_auth.'],function(){
+    Route::get('/',[UserAuthController::class ,'index'])->name('index');
+    Route::get('/setting/{id}',[UserAuthController::class ,'setting'])->name('setting');
+    Route::get('/logs/{id}',[UserAuthController::class ,'logs'])->name('logs');
+});
 

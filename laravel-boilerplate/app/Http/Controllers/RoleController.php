@@ -114,4 +114,9 @@ class RoleController extends Controller
         }
     }
 
+    public function delete(Request $request,$id)
+    {
+        $data = Role::where('id',$id)->delete();
+        return response()->json(['status'=>true]);
+    }
 }

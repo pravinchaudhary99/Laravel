@@ -61,7 +61,55 @@ $(document).ready(function(){
                 });
             }
         });
+
+
+
     });
+    $.ajaxSetup({
+        headers:
+        { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+    });
+    $(document).on('click','.delete_user_data',function(){
+        var id = $(this).attr('data-id');
+        Swal.fire({
+            text: "Are you sure you would like to delete?",
+            icon: "warning",
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: "Yes, cancel it!",
+            cancelButtonText: "No, return",
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: "btn btn-active-light"
+            }
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    url : '/users/delete/'+id,
+                    type : 'Delete',
+                    success : function(data){
+                        if(data['status'] === true){
+                            var host = $(location).attr('host');
+                            const a = document.createElement('a');
+                            a.href = "/users";
+                            a.click();
+                        }
+                    }
+                });
+            } else if (result.dismiss === 'cancel') {
+                Swal.fire({
+                    text: "Your form has not been deleted!.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                    }
+                });
+            }
+        });
+    });
+
 
 
 });

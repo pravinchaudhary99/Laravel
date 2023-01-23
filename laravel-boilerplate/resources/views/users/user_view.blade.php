@@ -5,7 +5,12 @@
 @section('content')
 <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
-
+        <script>
+            toastr.options.timeOut = 4000;
+            @if (Session::has('error'))
+                toastr.error('{{ Session::get('error') }}');
+            @endif
+        </script>
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
 
@@ -81,19 +86,18 @@
                                 <div class="d-flex flex-center flex-column py-5">
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-100px symbol-circle mb-7">
-                                        <img src="{{ asset('/assets/media/avatars/300-6.jpg') }}" alt="image">
+                                        <img src="@if(!isset($user_data->profile_picture)){{ asset('/assets/media/svg/avatars/blank.svg') }}@else{{ url($user_data->profile_picture) }}@endif" alt="image">
                                     </div>
                                     <!--end::Avatar-->
 
                                     <!--begin::Name-->
-                                    <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3">
-                                        Emma Smith </a>
+                                    <span class="fs-3 text-gray-800 fw-bold mb-3">{{ $user_data['name'] }}</span>
                                     <!--end::Name-->
 
                                     <!--begin::Position-->
                                     <div class="mb-9">
                                         <!--begin::Badge-->
-                                        <div class="badge badge-lg badge-light-primary d-inline">Administrator</div>
+                                        <div class="badge badge-lg badge-light-primary d-inline">{{ $role_name }}</div>
                                         <!--begin::Badge-->
                                     </div>
                                     <!--end::Position-->
@@ -101,8 +105,7 @@
                                     <!--begin::Info-->
                                     <!--begin::Info heading-->
                                     <div class="fw-bold mb-3">
-                                        Assigned Tickets
-
+                                        Assigned Task
                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="popover"
                                             data-bs-trigger="hover" data-bs-html="true"
                                             data-bs-content="Number of support tickets assigned, closed and pending this week."
@@ -114,7 +117,7 @@
                                         <!--begin::Stats-->
                                         <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                             <div class="fs-4 fw-bold text-gray-700">
-                                                <span class="w-75px">243</span>
+                                                <span class="w-75px">10</span>
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                 <span class="svg-icon svg-icon-3 svg-icon-success"><svg width="24"
                                                         height="24" viewBox="0 0 24 24" fill="none"
@@ -136,7 +139,7 @@
                                         <!--begin::Stats-->
                                         <div class="border border-gray-300 border-dashed rounded py-3 px-3 mx-4 mb-3">
                                             <div class="fs-4 fw-bold text-gray-700">
-                                                <span class="w-50px">56</span>
+                                                <span class="w-50px">6</span>
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
                                                 <span class="svg-icon svg-icon-3 svg-icon-danger"><svg width="24"
                                                         height="24" viewBox="0 0 24 24" fill="none"
@@ -158,7 +161,7 @@
                                         <!--begin::Stats-->
                                         <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                             <div class="fs-4 fw-bold text-gray-700">
-                                                <span class="w-50px">188</span>
+                                                <span class="w-50px">4</span>
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                 <span class="svg-icon svg-icon-3 svg-icon-success"><svg width="24"
                                                         height="24" viewBox="0 0 24 24" fill="none"
@@ -205,7 +208,7 @@
                                     <span data-bs-toggle="tooltip" data-bs-trigger="hover"
                                         data-bs-original-title="Edit customer details" data-kt-initialized="1">
                                         <a href="#" class="btn btn-sm btn-light-primary" data-bs-toggle="modal"
-                                            data-bs-target="#kt_modal_update_details">
+                                            data-bs-target="#kt_modal_add_customer">
                                             Edit
                                         </a>
                                     </span>
@@ -218,23 +221,11 @@
                                 <div id="kt_user_view_details" class="collapse show">
                                     <div class="pb-5 fs-6">
                                         <!--begin::Details item-->
-                                        <div class="fw-bold mt-5">Account ID</div>
-                                        <div class="text-gray-600">ID-45453423</div>
-                                        <!--begin::Details item-->
-                                        <!--begin::Details item-->
                                         <div class="fw-bold mt-5">Email</div>
-                                        <div class="text-gray-600"><a href="#"
-                                                class="text-gray-600 text-hover-primary">info@keenthemes.com</a></div>
+                                        <div class="text-gray-600"><span
+                                                class="text-gray-600">{{ $user_data['email'] }}</span></div>
                                         <!--begin::Details item-->
-                                        <!--begin::Details item-->
-                                        <div class="fw-bold mt-5">Address</div>
-                                        <div class="text-gray-600">101 Collin Street, <br>Melbourne 3000 VIC<br>Australia
-                                        </div>
-                                        <!--begin::Details item-->
-                                        <!--begin::Details item-->
-                                        <div class="fw-bold mt-5">Language</div>
-                                        <div class="text-gray-600">English</div>
-                                        <!--begin::Details item-->
+
                                         <!--begin::Details item-->
                                         <div class="fw-bold mt-5">Last Login</div>
                                         <div class="text-gray-600">10 Nov 2023, 9:23 pm</div>
@@ -278,7 +269,7 @@
                             </li>
                             <!--end:::Tab item-->
 
-                           
+
                         </ul>
                         <!--end:::Tabs-->
 
@@ -3362,410 +3353,203 @@
 
                 <!--begin::Modals-->
                 <!--begin::Modal - Update user details-->
-                <div class="modal fade" id="kt_modal_update_details" tabindex="-1" aria-hidden="true">
+                <div class="modal fade" id="kt_modal_add_customer" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->
                     <div class="modal-dialog modal-dialog-centered mw-650px">
                         <!--begin::Modal content-->
                         <div class="modal-content">
                             <!--begin::Form-->
-                            <form class="form" action="#" id="kt_modal_update_user_form">
+                            <form class="form" action="@if(isset($user_data)){{ route('users.update',$user_data->id) }}@endif" method="POST" id="kt_modal_add_user_form" enctype="multipart/form-data">
+                                @csrf
                                 <!--begin::Modal header-->
-                                <div class="modal-header" id="kt_modal_update_user_header">
+                                @if (isset($user_data))
+                                    @method('PUT')
+                                @endif
+                                <div class="modal-header" id="kt_modal_add_customer_header">
                                     <!--begin::Modal title-->
                                     <h2 class="fw-bold">Update User Details</h2>
                                     <!--end::Modal title-->
-
                                     <!--begin::Close-->
-                                    <div class="btn btn-icon btn-sm btn-active-icon-primary"
-                                        data-kt-users-modal-action="close">
+                                    <div id="kt_modal_add_customer_close" class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                        <span class="svg-icon svg-icon-1"><svg width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect opacity="0.5" x="6" y="17.3137" width="16"
-                                                    height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                                                    fill="currentColor"></rect>
-                                                <rect x="7.41422" y="6" width="16" height="2"
-                                                    rx="1" transform="rotate(45 7.41422 6)"
-                                                    fill="currentColor"></rect>
+                                        <span class="svg-icon svg-icon-1">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
                                             </svg>
-
                                         </span>
                                         <!--end::Svg Icon-->
                                     </div>
                                     <!--end::Close-->
                                 </div>
                                 <!--end::Modal header-->
-
                                 <!--begin::Modal body-->
                                 <div class="modal-body py-10 px-lg-17">
-                                    <!--begin::Scroll-->
-                                    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_update_user_scroll"
-                                        data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
-                                        data-kt-scroll-max-height="auto"
-                                        data-kt-scroll-dependencies="#kt_modal_update_user_header"
-                                        data-kt-scroll-wrappers="#kt_modal_update_user_scroll"
-                                        data-kt-scroll-offset="300px" style="max-height: 163px;">
-                                        <!--begin::User toggle-->
-                                        <div class="fw-bolder fs-3 rotate collapsible mb-7" data-bs-toggle="collapse"
-                                            href="#kt_modal_update_user_user_info" role="button"
-                                            aria-expanded="false" aria-controls="kt_modal_update_user_user_info">
-                                            User Information
-                                            <span class="ms-2 rotate-180">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                <span class="svg-icon svg-icon-3"><svg width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
-                                                            fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </span>
-                                        </div>
-                                        <!--end::User toggle-->
+                                    <!--begin::User form-->
+                                    <div id="kt_modal_update_user_user_info" class="collapse show">
+                                        <!--begin::Input group-->
+                                        <div class="mb-7">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span>Update Avatar</span>
 
-                                        <!--begin::User form-->
-                                        <div id="kt_modal_update_user_user_info" class="collapse show">
-                                            <!--begin::Input group-->
-                                            <div class="mb-7">
-                                                <!--begin::Label-->
-                                                <label class="fs-6 fw-semibold mb-2">
-                                                    <span>Update Avatar</span>
+                                                <i class="fas fa-exclamation-circle ms-1 fs-7"
+                                                    data-bs-toggle="tooltip"
+                                                    aria-label="Allowed file types: png, jpg, jpeg."
+                                                    data-bs-original-title="Allowed file types: png, jpg, jpeg."
+                                                    data-kt-initialized="1"></i>
+                                            </label>
+                                            <!--end::Label-->
 
-                                                    <i class="fas fa-exclamation-circle ms-1 fs-7"
-                                                        data-bs-toggle="tooltip"
-                                                        aria-label="Allowed file types: png, jpg, jpeg."
-                                                        data-bs-original-title="Allowed file types: png, jpg, jpeg."
-                                                        data-kt-initialized="1"></i>
-                                                </label>
-                                                <!--end::Label-->
+                                            <!--begin::Image input wrapper-->
+                                            <div class="mt-1">
 
-                                                <!--begin::Image input wrapper-->
-                                                <div class="mt-1">
+                                                <!--begin::Image placeholder-->
+                                                <style>
+                                                    .image-input-placeholder {
+                                                        background-image: url('/assets/media/svg/avatars/blank.svg');
+                                                    }
 
-                                                    <!--begin::Image placeholder-->
-                                                    <style>
-                                                        .image-input-placeholder {
-                                                            background-image: url('/metronic8/demo1/assets/media/svg/avatars/blank.svg');
-                                                        }
-
-                                                        [data-theme="dark"] .image-input-placeholder {
-                                                            background-image: url('/metronic8/demo1/assets/media/svg/avatars/blank-dark.svg');
-                                                        }
-                                                    </style>
-                                                    <!--end::Image placeholder-->
-                                                    <!--begin::Image input-->
-                                                    <div class="image-input image-input-outline image-input-placeholder"
-                                                        data-kt-image-input="true">
-                                                        <!--begin::Preview existing avatar-->
-                                                        <div class="image-input-wrapper w-125px h-125px"
-                                                            style="background-image: url(/metronic8/demo1/assets/media/avatars/300-6.jpg">
-                                                        </div>
-                                                        <!--end::Preview existing avatar-->
-
-                                                        <!--begin::Edit-->
-                                                        <label
-                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                            data-kt-image-input-action="change" data-bs-toggle="tooltip"
-                                                            aria-label="Change avatar"
-                                                            data-bs-original-title="Change avatar"
-                                                            data-kt-initialized="1">
-                                                            <i class="bi bi-pencil-fill fs-7"></i>
-
-                                                            <!--begin::Inputs-->
-                                                            <input type="file" name="avatar"
-                                                                accept=".png, .jpg, .jpeg">
-                                                            <input type="hidden" name="avatar_remove">
-                                                            <!--end::Inputs-->
-                                                        </label>
-                                                        <!--end::Edit-->
-
-                                                        <!--begin::Cancel-->
-                                                        <span
-                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                            data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
-                                                            aria-label="Cancel avatar"
-                                                            data-bs-original-title="Cancel avatar"
-                                                            data-kt-initialized="1">
-                                                            <i class="bi bi-x fs-2"></i>
-                                                        </span>
-                                                        <!--end::Cancel-->
-
-                                                        <!--begin::Remove-->
-                                                        <span
-                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                            data-kt-image-input-action="remove" data-bs-toggle="tooltip"
-                                                            aria-label="Remove avatar"
-                                                            data-bs-original-title="Remove avatar"
-                                                            data-kt-initialized="1">
-                                                            <i class="bi bi-x fs-2"></i>
-                                                        </span>
-                                                        <!--end::Remove-->
+                                                    [data-theme="dark"] .image-input-placeholder {
+                                                        background-image: url('/assets/media/svg/avatars/blank-dark.svg');
+                                                    }
+                                                </style>
+                                                <!--end::Image placeholder-->
+                                                <!--begin::Image input-->
+                                                <div class="image-input image-input-outline image-input-placeholder"
+                                                    data-kt-image-input="true">
+                                                    <!--begin::Preview existing avatar-->
+                                                    <div class="image-input-wrapper w-125px h-125px"
+                                                        style="background-image: @if(!isset($user_data->profile_picture))url('{{ asset('/assets/media/svg/avatars/blank.svg') }}')@else url('{{ url($user_data->profile_picture) }}')@endif">
                                                     </div>
-                                                    <!--end::Image input-->
+                                                    <!--end::Preview existing avatar-->
+
+                                                    <!--begin::Edit-->
+                                                    <label
+                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                                        aria-label="Change picture"
+                                                        data-bs-original-title="Change picture"
+                                                        data-kt-initialized="1">
+                                                        <i class="bi bi-pencil-fill fs-7"></i>
+
+                                                        <!--begin::Inputs-->
+                                                        <input type="file" name="image"
+                                                            accept=".png, .jpg, .jpeg">
+                                                        <input type="hidden" name="avatar_remove">
+                                                        <!--end::Inputs-->
+                                                    </label>
+                                                    <!--end::Edit-->
+
+                                                    <!--begin::Cancel-->
+                                                    <span
+                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                        data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
+                                                        aria-label="Cancel avatar"
+                                                        data-bs-original-title="Cancel avatar"
+                                                        data-kt-initialized="1">
+                                                        <i class="bi bi-x fs-2"></i>
+                                                    </span>
+                                                    <!--end::Cancel-->
+
+                                                    <!--begin::Remove-->
+                                                    <span
+                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                        data-kt-image-input-action="remove" data-bs-toggle="tooltip"
+                                                        aria-label="Remove picture"
+                                                        data-bs-original-title="Remove picture"
+                                                        data-kt-initialized="1">
+                                                        <i class="bi bi-x fs-2"></i>
+                                                    </span>
+                                                    <!--end::Remove-->
                                                 </div>
-                                                <!--end::Image input wrapper-->
+                                                <!--end::Image input-->
                                             </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-7">
-                                                <!--begin::Label-->
-                                                <label class="fs-6 fw-semibold mb-2">Name</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
-                                                    placeholder="" name="name" value="Emma Smith">
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-7">
-                                                <!--begin::Label-->
-                                                <label class="fs-6 fw-semibold mb-2">
-                                                    <span>Email</span>
-
-                                                    <i class="fas fa-exclamation-circle ms-1 fs-7"
-                                                        data-bs-toggle="tooltip"
-                                                        aria-label="Email address must be active"
-                                                        data-bs-original-title="Email address must be active"
-                                                        data-kt-initialized="1"></i>
-                                                </label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="email" class="form-control form-control-solid"
-                                                    placeholder="" name="email" value="smith@kpmg.com">
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-7">
-                                                <!--begin::Label-->
-                                                <label class="fs-6 fw-semibold mb-2">Description</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
-                                                    placeholder="" name="description">
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-15">
-                                                <!--begin::Label-->
-                                                <label class="fs-6 fw-semibold mb-2">Language</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <select name="language" aria-label="Select a Language"
-                                                    data-control="select2" data-placeholder="Select a Language..."
-                                                    class="form-select form-select-solid select2-hidden-accessible"
-                                                    data-dropdown-parent="#kt_modal_update_details"
-                                                    data-select2-id="select2-data-25-4xvy" tabindex="-1"
-                                                    aria-hidden="true" data-kt-initialized="1">
-                                                    <option data-select2-id="select2-data-27-4s29"></option>
-                                                    <option value="id">Bahasa Indonesia - Indonesian</option>
-                                                    <option value="msa">Bahasa Melayu - Malay</option>
-                                                    <option value="ca">Català - Catalan</option>
-                                                    <option value="cs">Čeština - Czech</option>
-                                                    <option value="da">Dansk - Danish</option>
-                                                    <option value="de">Deutsch - German</option>
-                                                    <option value="en">English</option>
-
-                                                </select><span
-                                                    class="select2 select2-container select2-container--bootstrap5"
-                                                    dir="ltr" data-select2-id="select2-data-26-epzu"
-                                                    style="width: 100%;"><span class="selection"><span
-                                                            class="select2-selection select2-selection--single form-select form-select-solid"
-                                                            role="combobox" aria-haspopup="true" aria-expanded="false"
-                                                            tabindex="0" aria-disabled="false"
-                                                            aria-labelledby="select2-language-8n-container"
-                                                            aria-controls="select2-language-8n-container"><span
-                                                                class="select2-selection__rendered"
-                                                                id="select2-language-8n-container" role="textbox"
-                                                                aria-readonly="true" title="Select a Language..."><span
-                                                                    class="select2-selection__placeholder">Select a
-                                                                    Language...</span></span><span
-                                                                class="select2-selection__arrow" role="presentation"><b
-                                                                    role="presentation"></b></span></span></span><span
-                                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
+                                            <!--end::Image input wrapper-->
                                         </div>
-                                        <!--end::User form-->
-
-                                        <!--begin::Address toggle-->
-                                        <div class="fw-bolder fs-3 rotate collapsible mb-7" data-bs-toggle="collapse"
-                                            href="#kt_modal_update_user_address" role="button" aria-expanded="false"
-                                            aria-controls="kt_modal_update_user_address">
-                                            Address Details
-                                            <span class="ms-2 rotate-180">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                <span class="svg-icon svg-icon-3"><svg width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
-                                                            fill="currentColor"></path>
-                                                    </svg>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <span>{{ $message }}</span>
                                                 </span>
-                                                <!--end::Svg Icon-->
+                                            @enderror
+                                        <div class="fv-row mb-7">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-semibold mb-2">Name</label>
+                                            <!--end::Label-->
+
+                                            <!--begin::Input-->
+                                            <input type="text" class="form-control form-control-solid"
+                                                placeholder="Enter User name" name="name" value="{{ $user_data->name }}">
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                        <!--begin::Input group-->
+                                        <div class="fv-row mb-7">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span>Email</span>
+
+                                                <i class="fas fa-exclamation-circle ms-1 fs-7"
+                                                    data-bs-toggle="tooltip"
+                                                    aria-label="Email address must be active"
+                                                    data-bs-original-title="Email address must be active"
+                                                    data-kt-initialized="1"></i>
+                                            </label>
+                                            <!--end::Label-->
+
+                                            <!--begin::Input-->
+                                            <input type="email" class="form-control form-control-solid"
+                                                placeholder="Enter Email address" name="email" value="{{ $user_data->email }}">
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        @error('role')
+                                            <span class="invalid-feedback" role="alert">
+                                                <span>{{ $message }}</span>
                                             </span>
+                                        @enderror
+                                        <div class="d-flex flex-column mb-7 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span class="required">Role</span>
+                                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+
+                                            <select name="role" aria-label="Select a Role" data-control="select2" data-placeholder="Select a Role..." data-dropdown-parent="#kt_modal_add_customer" class="form-select form-select-solid fw-bold">
+                                                <option value="">Select a Role...</option>
+                                                @if (isset($role_list))
+                                                    @foreach ($role_list as $item)
+                                                        @if ($user_data->role_id == $item['id'])
+                                                            <option value="{{ $item['id'] }}" selected>{{ $item['name'] }}</option>
+                                                        @else
+                                                            <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <!--end::Input-->
                                         </div>
-                                        <!--end::Address toggle-->
-
-                                        <!--begin::Address form-->
-                                        <div id="kt_modal_update_user_address" class="collapse show">
-                                            <!--begin::Input group-->
-                                            <div class="d-flex flex-column mb-7 fv-row">
-                                                <!--begin::Label-->
-                                                <label class="fs-6 fw-semibold mb-2">Address Line 1</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input class="form-control form-control-solid" placeholder=""
-                                                    name="address1" value="101, Collins Street">
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="d-flex flex-column mb-7 fv-row">
-                                                <!--begin::Label-->
-                                                <label class="fs-6 fw-semibold mb-2">Address Line 2</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input class="form-control form-control-solid" placeholder=""
-                                                    name="address2">
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="d-flex flex-column mb-7 fv-row">
-                                                <!--begin::Label-->
-                                                <label class="fs-6 fw-semibold mb-2">Town</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input class="form-control form-control-solid" placeholder=""
-                                                    name="city" value="Melbourne">
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="row g-9 mb-7">
-                                                <!--begin::Col-->
-                                                <div class="col-md-6 fv-row">
-                                                    <!--begin::Label-->
-                                                    <label class="fs-6 fw-semibold mb-2">State / Province</label>
-                                                    <!--end::Label-->
-
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-solid" placeholder=""
-                                                        name="state" value="Victoria">
-                                                    <!--end::Input-->
-                                                </div>
-                                                <!--end::Col-->
-
-                                                <!--begin::Col-->
-                                                <div class="col-md-6 fv-row">
-                                                    <!--begin::Label-->
-                                                    <label class="fs-6 fw-semibold mb-2">Post Code</label>
-                                                    <!--end::Label-->
-
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-solid" placeholder=""
-                                                        name="postcode" value="3000">
-                                                    <!--end::Input-->
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="d-flex flex-column mb-7 fv-row">
-                                                <!--begin::Label-->
-                                                <label class="fs-6 fw-semibold mb-2">
-                                                    <span>Country</span>
-
-                                                    <i class="fas fa-exclamation-circle ms-1 fs-7"
-                                                        data-bs-toggle="tooltip" aria-label="Country of origination"
-                                                        data-bs-original-title="Country of origination"
-                                                        data-kt-initialized="1"></i>
-                                                </label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <select name="country" aria-label="Select a Country"
-                                                    data-control="select2" data-placeholder="Select a Country..."
-                                                    class="form-select form-select-solid select2-hidden-accessible"
-                                                    data-dropdown-parent="#kt_modal_update_details"
-                                                    data-select2-id="select2-data-28-gxnt" tabindex="-1"
-                                                    aria-hidden="true" data-kt-initialized="1">
-                                                    <option value="" data-select2-id="select2-data-30-kt5m">Select
-                                                        a Country...</option>
-                                                    <option value="AF">Afghanistan</option>
-                                                    <option value="AX">Aland Islands</option>
-                                                    <option value="AL">Albania</option>
-                                                    <option value="DZ">Algeria</option>
-                                                    <option value="AS">American Samoa</option>
-                                                    <option value="AD">Andorra</option>
-                                                </select><span
-                                                    class="select2 select2-container select2-container--bootstrap5"
-                                                    dir="ltr" data-select2-id="select2-data-29-p744"
-                                                    style="width: 100%;"><span class="selection"><span
-                                                            class="select2-selection select2-selection--single form-select form-select-solid"
-                                                            role="combobox" aria-haspopup="true" aria-expanded="false"
-                                                            tabindex="0" aria-disabled="false"
-                                                            aria-labelledby="select2-country-lh-container"
-                                                            aria-controls="select2-country-lh-container"><span
-                                                                class="select2-selection__rendered"
-                                                                id="select2-country-lh-container" role="textbox"
-                                                                aria-readonly="true" title="Select a Country..."><span
-                                                                    class="select2-selection__placeholder">Select a
-                                                                    Country...</span></span><span
-                                                                class="select2-selection__arrow" role="presentation"><b
-                                                                    role="presentation"></b></span></span></span><span
-                                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                        </div>
-                                        <!--end::Address form-->
+                                        <!--end::Input group-->
                                     </div>
                                     <!--end::Scroll-->
                                 </div>
                                 <!--end::Modal body-->
-
                                 <!--begin::Modal footer-->
                                 <div class="modal-footer flex-center">
                                     <!--begin::Button-->
-                                    <button type="reset" class="btn btn-light me-3"
-                                        data-kt-users-modal-action="cancel">
-                                        Discard
-                                    </button>
+                                    <button type="reset" id="kt_modal_add_customer_cancel" data-kt-users-modal-action="cancel" class="btn btn-light me-3">Discard</button>
                                     <!--end::Button-->
-
                                     <!--begin::Button-->
-                                    <button type="submit" class="btn btn-primary"
-                                        data-kt-users-modal-action="submit">
-                                        <span class="indicator-label">
-                                            Submit
-                                        </span>
-                                        <span class="indicator-progress">
-                                            Please wait... <span
-                                                class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                        </span>
+                                    <button type="submit" id="kt_modal_add_customer_submit" class="btn btn-primary">
+                                        <span class="indicator-label">Submit</span>
+                                        <span class="indicator-progress">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                     </button>
                                     <!--end::Button-->
                                 </div>
@@ -3776,6 +3560,7 @@
                     </div>
                 </div>
                 <!--end::Modal - Update user details-->
+
                 <!--begin::Modal - Add schedule-->
                 <div class="modal fade" id="kt_modal_add_schedule" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->
@@ -4746,4 +4531,8 @@
         <!--end::Content-->
     </div>
 <!--end::Content wrapper-->
+@endsection
+
+@section('script_file')
+    <script src="{{ asset('/assets/js/users/show_hide_modal.js') }}"></script>
 @endsection

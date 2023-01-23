@@ -4,8 +4,8 @@
 <head>
     <title>Weboccult | Sign - up</title>
     <meta charset="utf-8" />
-        
-        
+
+
     <link rel="shortcut icon" href="assets/media/logos/default-small.png" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -47,10 +47,10 @@
 									<!--begin::Title-->
 									<h1 class="text-dark fw-bolder mb-3">Sign Up</h1>
 									<!--end::Title-->
-									
+
 								</div>
 								<!--begin::Heading-->
-								
+
 								<!--begin::Separator-->
 								<div class="separator separator-content my-14">
 									<span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
@@ -68,7 +68,7 @@
 									<!--end::Email-->
 								</div>
 								<!--end::Input group-->
-								
+
 								<!--begin::Input group=-->
 								@error('email')
 									<span class="invalid-feedback" role="alert">
@@ -81,7 +81,7 @@
 									<!--end::Email-->
 								</div>
 								<!--end::Input group=-->
-								
+
 								<!--begin::Input group-->
 								@error('password')
 									<span class="invalid-feedback" role="alert">
@@ -114,7 +114,7 @@
 									<div class="text-muted">Use 8 or more characters with a mix of letters, numbers & symbols.</div>
 									<!--end::Hint-->
 								</div>
-								
+
 								<!--end::Input group=-->
 								<!--end::Input group=-->
 								@error('confirm_password')
@@ -143,15 +143,15 @@
 										<span class="indicator-label">Sign up</span>
 										<!--end::Indicator label-->
 										<!--begin::Indicator progress-->
-										<span class="indicator-progress">Please wait... 
+										<span class="indicator-progress">Please wait...
 										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 										<!--end::Indicator progress-->
 									</button>
 								</div>
 								<!--end::Submit button-->
 								<!--begin::Sign up-->
-								<div class="text-gray-500 text-center fw-semibold fs-6">Already have an Account? 
-								<a href="{{ route('login.index') }}" class="primary fw-semibold">Sign in</a></div>
+								<div class="text-gray-500 text-center fw-semibold fs-6">Already have an Account?
+								<a href="{{ route('login') }}" class="primary fw-semibold">Sign in</a></div>
 								<!--end::Sign up-->
 							</form>
 							<!--end::Form-->
@@ -160,7 +160,7 @@
 					</div>
 					<!--end::Form-->
 					<!--begin::Footer-->
-					
+
 					<!--end::Footer-->
 				</div>
 				<!--end::Body-->
@@ -176,7 +176,7 @@
 						<!--begin::Image-->
 						<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="{{ asset('assets/media/auth/girl-with-laptop-light.png') }}" alt="" />
 						<!--end::Image-->
-						
+
 					</div>
 					<!--end::Content-->
 				</div>
