@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use App\Models\LoginSession;
+use App\Models\UserSchedule;
+use App\Models\UserTask;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -46,8 +49,12 @@ class UserController extends Controller
         $user = true;
         $user_data = User::find($id);
         $role_list = Role::get();
+        $last_login = LoginSession::where('user_id',$id)->latest()->value('date_time');
         $role_name = Role::where('id',$user_data->role_id)->value('name');
-        return view('users.user_view',compact('user','user_data','role_list','role_name'));
+        $user_data['last_login'] = $last_login;
+        $user_data['user_list'] = json_encode(User::pluck('email')->toArray());
+        $user_task = UserTask::where('user_id',$id)->get();
+        return view('users.user_view',compact('user','user_data','role_list','role_name','user_task'));
     }
 
     public function update(Request $request,$id)
@@ -55,7 +62,8 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             "name" => 'required',
             "email" => 'required|email',
-            "role" => 'required'
+            "role" => 'required',
+            "contact_no" => 'min:9|max:10'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with('error','Please fill the all filed!');
@@ -71,6 +79,8 @@ class UserController extends Controller
                     'email' => $request->email,
                     'role_id' => $request->role,
                     'profile_picture' => $image_path,
+                    'address'=> $request->address,
+                    'contact_no'=> $request->contact_no,
                     'updated_at' => Carbon::now()
                 ]);
                 return redirect()->route('users.edit');
@@ -80,6 +90,8 @@ class UserController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'role_id' => $request->role,
+                    'address'=> $request->address,
+                    'contact_no'=> $request->contact_no,
                     'updated_at' => Carbon::now()
                 ]);
                 return redirect()->route('users.edit');
@@ -93,5 +105,44 @@ class UserController extends Controller
     {
         $data = User::where('id',$id)->delete();
         return response()->json(['status'=>true]);
+    }
+
+
+    public function task_create(Request $request,$id)
+    {
+        $validator = Validator::make($request->all(), [
+            "name" => 'required',
+            "duedate" => 'required',
+            "description" => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error','Please fill the all filed!');
+        }
+        UserTask::create([
+            'name' => $request->name,
+            'due_date' => $request->duedate,
+            'description' => $request->description,
+            'user_id' => $id,
+        ]);
+        return redirect()->back();
+    }
+    public function schedule(Request $request,$id)
+    {
+        $validator = Validator::make($request->all(), [
+            "event_name" => 'required',
+            "event_datetime" => 'required',
+            "event_org" => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error','Please fill the all filed!');
+        }
+        UserSchedule::create([
+            'event_name' => $request->event_name,
+            'date_time' => $request->event_datetime,
+            'event_organiser' => $request->event_org,
+            'send_event_details_to' => $request->event_invitees,
+            'user_id' => $id
+        ]);
+        return redirect()->back();
     }
 }

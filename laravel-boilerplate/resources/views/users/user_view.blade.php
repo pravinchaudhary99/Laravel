@@ -225,10 +225,19 @@
                                         <div class="text-gray-600"><span
                                                 class="text-gray-600">{{ $user_data['email'] }}</span></div>
                                         <!--begin::Details item-->
-
+                                        <!--begin::Details item-->
+                                        <div class="fw-bold mt-5">Address</div>
+                                        <div class="text-gray-600"><span
+                                                class="text-gray-600">{{ $user_data['address'] }}</span></div>
+                                        <!--begin::Details item-->
+                                        <!--begin::Details item-->
+                                        <div class="fw-bold mt-5">Contact Number</div>
+                                        <div class="text-gray-600"><span
+                                                class="text-gray-600">{{ $user_data['contact_no'] }}</span></div>
+                                        <!--begin::Details item-->
                                         <!--begin::Details item-->
                                         <div class="fw-bold mt-5">Last Login</div>
-                                        <div class="text-gray-600">10 Nov 2023, 9:23 pm</div>
+                                        <div class="text-gray-600">{{ $user_data['last_login'] }}</div>
                                         <!--begin::Details item-->
                                     </div>
                                 </div>
@@ -252,20 +261,11 @@
                                     href="#kt_user_view_overview_tab" aria-selected="true" role="tab">Overview</a>
                             </li>
                             <!--end:::Tab item-->
-
-                            <!--begin:::Tab item-->
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true"
-                                    data-bs-toggle="tab" href="#kt_user_view_overview_security" data-kt-initialized="1"
-                                    aria-selected="false" tabindex="-1" role="tab">Security</a>
-                            </li>
-                            <!--end:::Tab item-->
-
                             <!--begin:::Tab item-->
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
                                     href="#kt_user_view_overview_events_and_logs_tab" aria-selected="false"
-                                    tabindex="-1" role="tab">Events &amp; Logs</a>
+                                    tabindex="-1" role="tab">Users &amp; Task</a>
                             </li>
                             <!--end:::Tab item-->
 
@@ -2242,6 +2242,11 @@
                                 </div>
                                 <!--end::Card-->
 
+
+                            </div>
+                            <!--end:::Tab pane-->
+                            <!--begin:::Tab pane-->
+                            <div class="tab-pane fade" id="kt_user_view_overview_events_and_logs_tab" role="tabpanel">
                                 <!--begin::Tasks-->
                                 <div class="card card-flush mb-6 mb-xl-9">
                                     <!--begin::Card header-->
@@ -2249,8 +2254,6 @@
                                         <!--begin::Card title-->
                                         <div class="card-title flex-column">
                                             <h2 class="mb-1">User's Tasks</h2>
-
-                                            <div class="fs-6 fw-semibold text-muted">Total 25 tasks in backlog</div>
                                         </div>
                                         <!--end::Card title-->
 
@@ -2285,6 +2288,11 @@
                                     <div class="card-body d-flex flex-column">
                                         <!--begin::Item-->
                                         <div class="d-flex align-items-center position-relative mb-7">
+                                            @if (isset($user_task))
+                                                @foreach ($user_task as $item)
+                                                    
+                                                @endforeach
+                                            @endif
                                             <!--begin::Label-->
                                             <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px">
                                             </div>
@@ -2292,1056 +2300,22 @@
 
                                             <!--begin::Details-->
                                             <div class="fw-semibold ms-5">
-                                                <a href="#"
-                                                    class="fs-5 fw-bold text-dark text-hover-primary">Create FureStibe
+                                                <a class="fs-5 fw-bold text-dark text-hover-primary">Create FureStibe
                                                     branding logo</a>
 
                                                 <!--begin::Info-->
                                                 <div class="fs-7 text-muted">
-                                                    Due in 1 day <a href="#">Karina Clark</a>
+                                                    Due in 1 day
                                                 </div>
                                                 <!--end::Info-->
                                             </div>
                                             <!--end::Details-->
-
-                                            <!--begin::Menu-->
-                                            <button type="button"
-                                                class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto"
-                                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                <span class="svg-icon svg-icon-3"><svg width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                            fill="currentColor"></path>
-                                                        <path opacity="0.3"
-                                                            d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                            fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </button>
-
-                                            <!--begin::Task menu-->
-                                            <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
-                                                data-kt-menu="true" data-kt-menu-id="kt-users-tasks">
-                                                <!--begin::Header-->
-                                                <div class="px-7 py-5">
-                                                    <div class="fs-5 text-dark fw-bold">Update Status</div>
-                                                </div>
-                                                <!--end::Header-->
-
-                                                <!--begin::Menu separator-->
-                                                <div class="separator border-gray-200"></div>
-                                                <!--end::Menu separator-->
-
-                                                <!--begin::Form-->
-                                                <form class="form px-7 py-5 fv-plugins-bootstrap5 fv-plugins-framework"
-                                                    data-kt-menu-id="kt-users-tasks-form">
-                                                    <!--begin::Input group-->
-                                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-                                                        <!--begin::Label-->
-                                                        <label class="form-label fs-6 fw-semibold">Status:</label>
-                                                        <!--end::Label-->
-
-                                                        <!--begin::Input-->
-                                                        <select
-                                                            class="form-select form-select-solid select2-hidden-accessible"
-                                                            name="task_status" data-kt-select2="true"
-                                                            data-placeholder="Select option" data-allow-clear="true"
-                                                            data-hide-search="true"
-                                                            data-select2-id="select2-data-10-aupp" tabindex="-1"
-                                                            aria-hidden="true" data-kt-initialized="1">
-                                                            <option data-select2-id="select2-data-12-gu2l"></option>
-                                                            <option value="1">Approved</option>
-                                                            <option value="2">Pending</option>
-                                                            <option value="3">In Process</option>
-                                                            <option value="4">Rejected</option>
-                                                        </select><span
-                                                            class="select2 select2-container select2-container--bootstrap5"
-                                                            dir="ltr" data-select2-id="select2-data-11-p8t2"
-                                                            style="width: 100%;"><span class="selection"><span
-                                                                    class="select2-selection select2-selection--single form-select form-select-solid"
-                                                                    role="combobox" aria-haspopup="true"
-                                                                    aria-expanded="false" tabindex="0"
-                                                                    aria-disabled="false"
-                                                                    aria-labelledby="select2-task_status-vi-container"
-                                                                    aria-controls="select2-task_status-vi-container"><span
-                                                                        class="select2-selection__rendered"
-                                                                        id="select2-task_status-vi-container"
-                                                                        role="textbox" aria-readonly="true"
-                                                                        title="Select option"><span
-                                                                            class="select2-selection__placeholder">Select
-                                                                            option</span></span><span
-                                                                        class="select2-selection__arrow"
-                                                                        role="presentation"><b
-                                                                            role="presentation"></b></span></span></span><span
-                                                                class="dropdown-wrapper"
-                                                                aria-hidden="true"></span></span>
-                                                        <!--end::Input-->
-                                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                    </div>
-                                                    <!--end::Input group-->
-
-                                                    <!--begin::Actions-->
-                                                    <div class="d-flex justify-content-end">
-                                                        <button type="button"
-                                                            class="btn btn-sm btn-light btn-active-light-primary me-2"
-                                                            data-kt-users-update-task-status="reset">Reset</button>
-
-                                                        <button type="submit" class="btn btn-sm btn-primary"
-                                                            data-kt-users-update-task-status="submit">
-                                                            <span class="indicator-label">
-                                                                Apply
-                                                            </span>
-                                                            <span class="indicator-progress">
-                                                                Please wait... <span
-                                                                    class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                                            </span>
-                                                        </button>
-                                                    </div>
-                                                    <!--end::Actions-->
-                                                </form>
-                                                <!--end::Form-->
-                                            </div>
-                                            <!--end::Task menu-->
-                                            <!--end::Menu-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center position-relative mb-7">
-                                            <!--begin::Label-->
-                                            <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px">
-                                            </div>
-                                            <!--end::Label-->
-
-                                            <!--begin::Details-->
-                                            <div class="fw-semibold ms-5">
-                                                <a href="#"
-                                                    class="fs-5 fw-bold text-dark text-hover-primary">Schedule a meeting
-                                                    with FireBear CTO John</a>
-
-                                                <!--begin::Info-->
-                                                <div class="fs-7 text-muted">
-                                                    Due in 3 days <a href="#">Rober Doe</a>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div>
-                                            <!--end::Details-->
-
-                                            <!--begin::Menu-->
-                                            <button type="button"
-                                                class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto"
-                                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                <span class="svg-icon svg-icon-3"><svg width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                            fill="currentColor"></path>
-                                                        <path opacity="0.3"
-                                                            d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                            fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </button>
-
-                                            <!--begin::Task menu-->
-                                            <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
-                                                data-kt-menu="true" data-kt-menu-id="kt-users-tasks">
-                                                <!--begin::Header-->
-                                                <div class="px-7 py-5">
-                                                    <div class="fs-5 text-dark fw-bold">Update Status</div>
-                                                </div>
-                                                <!--end::Header-->
-
-                                                <!--begin::Menu separator-->
-                                                <div class="separator border-gray-200"></div>
-                                                <!--end::Menu separator-->
-
-                                                <!--begin::Form-->
-                                                <form class="form px-7 py-5 fv-plugins-bootstrap5 fv-plugins-framework"
-                                                    data-kt-menu-id="kt-users-tasks-form">
-                                                    <!--begin::Input group-->
-                                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-                                                        <!--begin::Label-->
-                                                        <label class="form-label fs-6 fw-semibold">Status:</label>
-                                                        <!--end::Label-->
-
-                                                        <!--begin::Input-->
-                                                        <select
-                                                            class="form-select form-select-solid select2-hidden-accessible"
-                                                            name="task_status" data-kt-select2="true"
-                                                            data-placeholder="Select option" data-allow-clear="true"
-                                                            data-hide-search="true"
-                                                            data-select2-id="select2-data-13-3vh0" tabindex="-1"
-                                                            aria-hidden="true" data-kt-initialized="1">
-                                                            <option data-select2-id="select2-data-15-ywsi"></option>
-                                                            <option value="1">Approved</option>
-                                                            <option value="2">Pending</option>
-                                                            <option value="3">In Process</option>
-                                                            <option value="4">Rejected</option>
-                                                        </select><span
-                                                            class="select2 select2-container select2-container--bootstrap5"
-                                                            dir="ltr" data-select2-id="select2-data-14-u5yt"
-                                                            style="width: 100%;"><span class="selection"><span
-                                                                    class="select2-selection select2-selection--single form-select form-select-solid"
-                                                                    role="combobox" aria-haspopup="true"
-                                                                    aria-expanded="false" tabindex="0"
-                                                                    aria-disabled="false"
-                                                                    aria-labelledby="select2-task_status-uy-container"
-                                                                    aria-controls="select2-task_status-uy-container"><span
-                                                                        class="select2-selection__rendered"
-                                                                        id="select2-task_status-uy-container"
-                                                                        role="textbox" aria-readonly="true"
-                                                                        title="Select option"><span
-                                                                            class="select2-selection__placeholder">Select
-                                                                            option</span></span><span
-                                                                        class="select2-selection__arrow"
-                                                                        role="presentation"><b
-                                                                            role="presentation"></b></span></span></span><span
-                                                                class="dropdown-wrapper"
-                                                                aria-hidden="true"></span></span>
-                                                        <!--end::Input-->
-                                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                    </div>
-                                                    <!--end::Input group-->
-
-                                                    <!--begin::Actions-->
-                                                    <div class="d-flex justify-content-end">
-                                                        <button type="button"
-                                                            class="btn btn-sm btn-light btn-active-light-primary me-2"
-                                                            data-kt-users-update-task-status="reset">Reset</button>
-
-                                                        <button type="submit" class="btn btn-sm btn-primary"
-                                                            data-kt-users-update-task-status="submit">
-                                                            <span class="indicator-label">
-                                                                Apply
-                                                            </span>
-                                                            <span class="indicator-progress">
-                                                                Please wait... <span
-                                                                    class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                                            </span>
-                                                        </button>
-                                                    </div>
-                                                    <!--end::Actions-->
-                                                </form>
-                                                <!--end::Form-->
-                                            </div>
-                                            <!--end::Task menu-->
-                                            <!--end::Menu-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center position-relative mb-7">
-                                            <!--begin::Label-->
-                                            <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px">
-                                            </div>
-                                            <!--end::Label-->
-
-                                            <!--begin::Details-->
-                                            <div class="fw-semibold ms-5">
-                                                <a href="#" class="fs-5 fw-bold text-dark text-hover-primary">9
-                                                    Degree Project Estimation</a>
-
-                                                <!--begin::Info-->
-                                                <div class="fs-7 text-muted">
-                                                    Due in 1 week <a href="#">Neil Owen</a>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div>
-                                            <!--end::Details-->
-
-                                            <!--begin::Menu-->
-                                            <button type="button"
-                                                class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto"
-                                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                <span class="svg-icon svg-icon-3"><svg width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                            fill="currentColor"></path>
-                                                        <path opacity="0.3"
-                                                            d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                            fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </button>
-
-                                            <!--begin::Task menu-->
-                                            <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
-                                                data-kt-menu="true" data-kt-menu-id="kt-users-tasks">
-                                                <!--begin::Header-->
-                                                <div class="px-7 py-5">
-                                                    <div class="fs-5 text-dark fw-bold">Update Status</div>
-                                                </div>
-                                                <!--end::Header-->
-
-                                                <!--begin::Menu separator-->
-                                                <div class="separator border-gray-200"></div>
-                                                <!--end::Menu separator-->
-
-                                                <!--begin::Form-->
-                                                <form class="form px-7 py-5 fv-plugins-bootstrap5 fv-plugins-framework"
-                                                    data-kt-menu-id="kt-users-tasks-form">
-                                                    <!--begin::Input group-->
-                                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-                                                        <!--begin::Label-->
-                                                        <label class="form-label fs-6 fw-semibold">Status:</label>
-                                                        <!--end::Label-->
-
-                                                        <!--begin::Input-->
-                                                        <select
-                                                            class="form-select form-select-solid select2-hidden-accessible"
-                                                            name="task_status" data-kt-select2="true"
-                                                            data-placeholder="Select option" data-allow-clear="true"
-                                                            data-hide-search="true"
-                                                            data-select2-id="select2-data-16-uvcz" tabindex="-1"
-                                                            aria-hidden="true" data-kt-initialized="1">
-                                                            <option data-select2-id="select2-data-18-67gx"></option>
-                                                            <option value="1">Approved</option>
-                                                            <option value="2">Pending</option>
-                                                            <option value="3">In Process</option>
-                                                            <option value="4">Rejected</option>
-                                                        </select><span
-                                                            class="select2 select2-container select2-container--bootstrap5"
-                                                            dir="ltr" data-select2-id="select2-data-17-kwtu"
-                                                            style="width: 100%;"><span class="selection"><span
-                                                                    class="select2-selection select2-selection--single form-select form-select-solid"
-                                                                    role="combobox" aria-haspopup="true"
-                                                                    aria-expanded="false" tabindex="0"
-                                                                    aria-disabled="false"
-                                                                    aria-labelledby="select2-task_status-1x-container"
-                                                                    aria-controls="select2-task_status-1x-container"><span
-                                                                        class="select2-selection__rendered"
-                                                                        id="select2-task_status-1x-container"
-                                                                        role="textbox" aria-readonly="true"
-                                                                        title="Select option"><span
-                                                                            class="select2-selection__placeholder">Select
-                                                                            option</span></span><span
-                                                                        class="select2-selection__arrow"
-                                                                        role="presentation"><b
-                                                                            role="presentation"></b></span></span></span><span
-                                                                class="dropdown-wrapper"
-                                                                aria-hidden="true"></span></span>
-                                                        <!--end::Input-->
-                                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                    </div>
-                                                    <!--end::Input group-->
-
-                                                    <!--begin::Actions-->
-                                                    <div class="d-flex justify-content-end">
-                                                        <button type="button"
-                                                            class="btn btn-sm btn-light btn-active-light-primary me-2"
-                                                            data-kt-users-update-task-status="reset">Reset</button>
-
-                                                        <button type="submit" class="btn btn-sm btn-primary"
-                                                            data-kt-users-update-task-status="submit">
-                                                            <span class="indicator-label">
-                                                                Apply
-                                                            </span>
-                                                            <span class="indicator-progress">
-                                                                Please wait... <span
-                                                                    class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                                            </span>
-                                                        </button>
-                                                    </div>
-                                                    <!--end::Actions-->
-                                                </form>
-                                                <!--end::Form-->
-                                            </div>
-                                            <!--end::Task menu-->
-                                            <!--end::Menu-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center position-relative mb-7">
-                                            <!--begin::Label-->
-                                            <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px">
-                                            </div>
-                                            <!--end::Label-->
-
-                                            <!--begin::Details-->
-                                            <div class="fw-semibold ms-5">
-                                                <a href="#"
-                                                    class="fs-5 fw-bold text-dark text-hover-primary">Dashboard UI &amp;
-                                                    UX for Leafr CRM</a>
-
-                                                <!--begin::Info-->
-                                                <div class="fs-7 text-muted">
-                                                    Due in 1 week <a href="#">Olivia Wild</a>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div>
-                                            <!--end::Details-->
-
-                                            <!--begin::Menu-->
-                                            <button type="button"
-                                                class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto"
-                                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                <span class="svg-icon svg-icon-3"><svg width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                            fill="currentColor"></path>
-                                                        <path opacity="0.3"
-                                                            d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                            fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </button>
-
-                                            <!--begin::Task menu-->
-                                            <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
-                                                data-kt-menu="true" data-kt-menu-id="kt-users-tasks">
-                                                <!--begin::Header-->
-                                                <div class="px-7 py-5">
-                                                    <div class="fs-5 text-dark fw-bold">Update Status</div>
-                                                </div>
-                                                <!--end::Header-->
-
-                                                <!--begin::Menu separator-->
-                                                <div class="separator border-gray-200"></div>
-                                                <!--end::Menu separator-->
-
-                                                <!--begin::Form-->
-                                                <form class="form px-7 py-5 fv-plugins-bootstrap5 fv-plugins-framework"
-                                                    data-kt-menu-id="kt-users-tasks-form">
-                                                    <!--begin::Input group-->
-                                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-                                                        <!--begin::Label-->
-                                                        <label class="form-label fs-6 fw-semibold">Status:</label>
-                                                        <!--end::Label-->
-
-                                                        <!--begin::Input-->
-                                                        <select
-                                                            class="form-select form-select-solid select2-hidden-accessible"
-                                                            name="task_status" data-kt-select2="true"
-                                                            data-placeholder="Select option" data-allow-clear="true"
-                                                            data-hide-search="true"
-                                                            data-select2-id="select2-data-19-qofd" tabindex="-1"
-                                                            aria-hidden="true" data-kt-initialized="1">
-                                                            <option data-select2-id="select2-data-21-ua8y"></option>
-                                                            <option value="1">Approved</option>
-                                                            <option value="2">Pending</option>
-                                                            <option value="3">In Process</option>
-                                                            <option value="4">Rejected</option>
-                                                        </select><span
-                                                            class="select2 select2-container select2-container--bootstrap5"
-                                                            dir="ltr" data-select2-id="select2-data-20-rf1p"
-                                                            style="width: 100%;"><span class="selection"><span
-                                                                    class="select2-selection select2-selection--single form-select form-select-solid"
-                                                                    role="combobox" aria-haspopup="true"
-                                                                    aria-expanded="false" tabindex="0"
-                                                                    aria-disabled="false"
-                                                                    aria-labelledby="select2-task_status-uz-container"
-                                                                    aria-controls="select2-task_status-uz-container"><span
-                                                                        class="select2-selection__rendered"
-                                                                        id="select2-task_status-uz-container"
-                                                                        role="textbox" aria-readonly="true"
-                                                                        title="Select option"><span
-                                                                            class="select2-selection__placeholder">Select
-                                                                            option</span></span><span
-                                                                        class="select2-selection__arrow"
-                                                                        role="presentation"><b
-                                                                            role="presentation"></b></span></span></span><span
-                                                                class="dropdown-wrapper"
-                                                                aria-hidden="true"></span></span>
-                                                        <!--end::Input-->
-                                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                    </div>
-                                                    <!--end::Input group-->
-
-                                                    <!--begin::Actions-->
-                                                    <div class="d-flex justify-content-end">
-                                                        <button type="button"
-                                                            class="btn btn-sm btn-light btn-active-light-primary me-2"
-                                                            data-kt-users-update-task-status="reset">Reset</button>
-
-                                                        <button type="submit" class="btn btn-sm btn-primary"
-                                                            data-kt-users-update-task-status="submit">
-                                                            <span class="indicator-label">
-                                                                Apply
-                                                            </span>
-                                                            <span class="indicator-progress">
-                                                                Please wait... <span
-                                                                    class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                                            </span>
-                                                        </button>
-                                                    </div>
-                                                    <!--end::Actions-->
-                                                </form>
-                                                <!--end::Form-->
-                                            </div>
-                                            <!--end::Task menu-->
-                                            <!--end::Menu-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center position-relative ">
-                                            <!--begin::Label-->
-                                            <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px">
-                                            </div>
-                                            <!--end::Label-->
-
-                                            <!--begin::Details-->
-                                            <div class="fw-semibold ms-5">
-                                                <a href="#" class="fs-5 fw-bold text-dark text-hover-primary">Mivy
-                                                    App R&amp;D, Meeting with clients</a>
-
-                                                <!--begin::Info-->
-                                                <div class="fs-7 text-muted">
-                                                    Due in 2 weeks <a href="#">Sean Bean</a>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div>
-                                            <!--end::Details-->
-
-                                            <!--begin::Menu-->
-                                            <button type="button"
-                                                class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto"
-                                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                <span class="svg-icon svg-icon-3"><svg width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                            fill="currentColor"></path>
-                                                        <path opacity="0.3"
-                                                            d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                            fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </button>
-
-                                            <!--begin::Task menu-->
-                                            <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
-                                                data-kt-menu="true" data-kt-menu-id="kt-users-tasks">
-                                                <!--begin::Header-->
-                                                <div class="px-7 py-5">
-                                                    <div class="fs-5 text-dark fw-bold">Update Status</div>
-                                                </div>
-                                                <!--end::Header-->
-
-                                                <!--begin::Menu separator-->
-                                                <div class="separator border-gray-200"></div>
-                                                <!--end::Menu separator-->
-
-                                                <!--begin::Form-->
-                                                <form class="form px-7 py-5 fv-plugins-bootstrap5 fv-plugins-framework"
-                                                    data-kt-menu-id="kt-users-tasks-form">
-                                                    <!--begin::Input group-->
-                                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-                                                        <!--begin::Label-->
-                                                        <label class="form-label fs-6 fw-semibold">Status:</label>
-                                                        <!--end::Label-->
-
-                                                        <!--begin::Input-->
-                                                        <select
-                                                            class="form-select form-select-solid select2-hidden-accessible"
-                                                            name="task_status" data-kt-select2="true"
-                                                            data-placeholder="Select option" data-allow-clear="true"
-                                                            data-hide-search="true"
-                                                            data-select2-id="select2-data-22-92qo" tabindex="-1"
-                                                            aria-hidden="true" data-kt-initialized="1">
-                                                            <option data-select2-id="select2-data-24-7a4k"></option>
-                                                            <option value="1">Approved</option>
-                                                            <option value="2">Pending</option>
-                                                            <option value="3">In Process</option>
-                                                            <option value="4">Rejected</option>
-                                                        </select><span
-                                                            class="select2 select2-container select2-container--bootstrap5"
-                                                            dir="ltr" data-select2-id="select2-data-23-0pm3"
-                                                            style="width: 100%;"><span class="selection"><span
-                                                                    class="select2-selection select2-selection--single form-select form-select-solid"
-                                                                    role="combobox" aria-haspopup="true"
-                                                                    aria-expanded="false" tabindex="0"
-                                                                    aria-disabled="false"
-                                                                    aria-labelledby="select2-task_status-bn-container"
-                                                                    aria-controls="select2-task_status-bn-container"><span
-                                                                        class="select2-selection__rendered"
-                                                                        id="select2-task_status-bn-container"
-                                                                        role="textbox" aria-readonly="true"
-                                                                        title="Select option"><span
-                                                                            class="select2-selection__placeholder">Select
-                                                                            option</span></span><span
-                                                                        class="select2-selection__arrow"
-                                                                        role="presentation"><b
-                                                                            role="presentation"></b></span></span></span><span
-                                                                class="dropdown-wrapper"
-                                                                aria-hidden="true"></span></span>
-                                                        <!--end::Input-->
-                                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                    </div>
-                                                    <!--end::Input group-->
-
-                                                    <!--begin::Actions-->
-                                                    <div class="d-flex justify-content-end">
-                                                        <button type="button"
-                                                            class="btn btn-sm btn-light btn-active-light-primary me-2"
-                                                            data-kt-users-update-task-status="reset">Reset</button>
-
-                                                        <button type="submit" class="btn btn-sm btn-primary"
-                                                            data-kt-users-update-task-status="submit">
-                                                            <span class="indicator-label">
-                                                                Apply
-                                                            </span>
-                                                            <span class="indicator-progress">
-                                                                Please wait... <span
-                                                                    class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                                            </span>
-                                                        </button>
-                                                    </div>
-                                                    <!--end::Actions-->
-                                                </form>
-                                                <!--end::Form-->
-                                            </div>
-                                            <!--end::Task menu-->
-                                            <!--end::Menu-->
                                         </div>
                                         <!--end::Item-->
                                     </div>
                                     <!--end::Card body-->
                                 </div>
                                 <!--end::Tasks-->
-                            </div>
-                            <!--end:::Tab pane-->
-
-                            <!--begin:::Tab pane-->
-                            <div class="tab-pane fade" id="kt_user_view_overview_security" role="tabpanel">
-                                <!--begin::Card-->
-                                <div class="card pt-4 mb-6 mb-xl-9">
-                                    <!--begin::Card header-->
-                                    <div class="card-header border-0">
-                                        <!--begin::Card title-->
-                                        <div class="card-title">
-                                            <h2>Profile</h2>
-                                        </div>
-                                        <!--end::Card title-->
-                                    </div>
-                                    <!--end::Card header-->
-
-                                    <!--begin::Card body-->
-                                    <div class="card-body pt-0 pb-5">
-                                        <!--begin::Table wrapper-->
-                                        <div class="table-responsive">
-                                            <!--begin::Table-->
-                                            <table class="table align-middle table-row-dashed gy-5"
-                                                id="kt_table_users_login_session">
-                                                <!--begin::Table body-->
-                                                <tbody class="fs-6 fw-semibold text-gray-600">
-                                                    <tr>
-                                                        <td>Email</td>
-                                                        <td>smith@kpmg.com</td>
-                                                        <td class="text-end">
-                                                            <button type="button"
-                                                                class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#kt_modal_update_email">
-                                                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
-                                                                <span class="svg-icon svg-icon-3"><svg width="24"
-                                                                        height="24" viewBox="0 0 24 24"
-                                                                        fill="none"
-                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                        <path opacity="0.3"
-                                                                            d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z"
-                                                                            fill="currentColor"></path>
-                                                                        <path
-                                                                            d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z"
-                                                                            fill="currentColor"></path>
-                                                                    </svg>
-                                                                </span>
-                                                                <!--end::Svg Icon-->
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Password</td>
-                                                        <td>******</td>
-                                                        <td class="text-end">
-                                                            <button type="button"
-                                                                class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#kt_modal_update_password">
-                                                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
-                                                                <span class="svg-icon svg-icon-3"><svg width="24"
-                                                                        height="24" viewBox="0 0 24 24"
-                                                                        fill="none"
-                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                        <path opacity="0.3"
-                                                                            d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z"
-                                                                            fill="currentColor"></path>
-                                                                        <path
-                                                                            d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z"
-                                                                            fill="currentColor"></path>
-                                                                    </svg>
-                                                                </span>
-                                                                <!--end::Svg Icon-->
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Role</td>
-                                                        <td>Administrator</td>
-                                                        <td class="text-end">
-                                                            <button type="button"
-                                                                class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#kt_modal_update_role">
-                                                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
-                                                                <span class="svg-icon svg-icon-3"><svg width="24"
-                                                                        height="24" viewBox="0 0 24 24"
-                                                                        fill="none"
-                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                        <path opacity="0.3"
-                                                                            d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z"
-                                                                            fill="currentColor"></path>
-                                                                        <path
-                                                                            d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z"
-                                                                            fill="currentColor"></path>
-                                                                    </svg>
-                                                                </span>
-                                                                <!--end::Svg Icon-->
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <!--end::Table body-->
-                                            </table>
-                                            <!--end::Table-->
-                                        </div>
-                                        <!--end::Table wrapper-->
-                                    </div>
-                                    <!--end::Card body-->
-                                </div>
-                                <!--end::Card-->
-                            </div>
-                            <!--end:::Tab pane-->
-
-                            <!--begin:::Tab pane-->
-                            <div class="tab-pane fade" id="kt_user_view_overview_events_and_logs_tab" role="tabpanel">
-                                <!--begin::Card-->
-                                <div class="card pt-4 mb-6 mb-xl-9">
-                                    <!--begin::Card header-->
-                                    <div class="card-header border-0">
-                                        <!--begin::Card title-->
-                                        <div class="card-title">
-                                            <h2>Login Sessions</h2>
-                                        </div>
-                                        <!--end::Card title-->
-
-                                        <!--begin::Card toolbar-->
-                                        <div class="card-toolbar">
-                                            <!--begin::Filter-->
-                                            <button type="button" class="btn btn-sm btn-flex btn-light-primary"
-                                                id="kt_modal_sign_out_sesions">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr077.svg-->
-                                                <span class="svg-icon svg-icon-3"><svg width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <rect opacity="0.3" x="4" y="11"
-                                                            width="12" height="2" rx="1"
-                                                            fill="currentColor"></rect>
-                                                        <path
-                                                            d="M5.86875 11.6927L7.62435 10.2297C8.09457 9.83785 8.12683 9.12683 7.69401 8.69401C7.3043 8.3043 6.67836 8.28591 6.26643 8.65206L3.34084 11.2526C2.89332 11.6504 2.89332 12.3496 3.34084 12.7474L6.26643 15.3479C6.67836 15.7141 7.3043 15.6957 7.69401 15.306C8.12683 14.8732 8.09458 14.1621 7.62435 13.7703L5.86875 12.3073C5.67684 12.1474 5.67684 11.8526 5.86875 11.6927Z"
-                                                            fill="currentColor"></path>
-                                                        <path
-                                                            d="M8 5V6C8 6.55228 8.44772 7 9 7C9.55228 7 10 6.55228 10 6C10 5.44772 10.4477 5 11 5H18C18.5523 5 19 5.44772 19 6V18C19 18.5523 18.5523 19 18 19H11C10.4477 19 10 18.5523 10 18C10 17.4477 9.55228 17 9 17C8.44772 17 8 17.4477 8 18V19C8 20.1046 8.89543 21 10 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H10C8.89543 3 8 3.89543 8 5Z"
-                                                            fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon--> Sign out all sessions
-                                            </button>
-                                            <!--end::Filter-->
-                                        </div>
-                                        <!--end::Card toolbar-->
-                                    </div>
-                                    <!--end::Card header-->
-
-                                    <!--begin::Card body-->
-                                    <div class="card-body pt-0 pb-5">
-                                        <!--begin::Table wrapper-->
-                                        <div class="table-responsive">
-                                            <!--begin::Table-->
-                                            <table class="table align-middle table-row-dashed gy-5"
-                                                id="kt_table_users_login_session">
-                                                <!--begin::Table head-->
-                                                <thead class="border-bottom border-gray-200 fs-7 fw-bold">
-                                                    <!--begin::Table row-->
-                                                    <tr class="text-start text-muted text-uppercase gs-0">
-                                                        <th class="min-w-100px">Location</th>
-                                                        <th>Device</th>
-                                                        <th>IP Address</th>
-                                                        <th class="min-w-125px">Time</th>
-                                                        <th class="min-w-70px">Actions</th>
-                                                    </tr>
-                                                    <!--end::Table row-->
-                                                </thead>
-                                                <!--end::Table head-->
-
-                                                <!--begin::Table body-->
-                                                <tbody class="fs-6 fw-semibold text-gray-600">
-                                                    <tr>
-                                                        <!--begin::Invoice--->
-                                                        <td>
-                                                            Australia </td>
-                                                        <!--end::Invoice--->
-
-                                                        <!--begin::Status--->
-                                                        <td>
-                                                            Chome - Windows </td>
-                                                        <!--end::Status--->
-
-                                                        <!--begin::Amount--->
-                                                        <td>
-                                                            207.30.44.28 </td>
-                                                        <!--end::Amount--->
-
-                                                        <!--begin::Date--->
-                                                        <td>
-                                                            23 seconds ago </td>
-                                                        <!--end::Date--->
-
-                                                        <!--begin::Action--->
-                                                        <td>
-                                                            Current session </td>
-                                                        <!--end::Action--->
-                                                    </tr>
-                                                    <tr>
-                                                        <!--begin::Invoice--->
-                                                        <td>
-                                                            Australia </td>
-                                                        <!--end::Invoice--->
-
-                                                        <!--begin::Status--->
-                                                        <td>
-                                                            Safari - iOS </td>
-                                                        <!--end::Status--->
-
-                                                        <!--begin::Amount--->
-                                                        <td>
-                                                            207.44.43.229 </td>
-                                                        <!--end::Amount--->
-
-                                                        <!--begin::Date--->
-                                                        <td>
-                                                            3 days ago </td>
-                                                        <!--end::Date--->
-
-                                                        <!--begin::Action--->
-                                                        <td>
-                                                            <a href="#" data-kt-users-sign-out="single_user">Sign
-                                                                out</a>
-                                                        </td>
-                                                        <!--end::Action--->
-                                                    </tr>
-                                                    <tr>
-                                                        <!--begin::Invoice--->
-                                                        <td>
-                                                            Australia </td>
-                                                        <!--end::Invoice--->
-
-                                                        <!--begin::Status--->
-                                                        <td>
-                                                            Chrome - Windows </td>
-                                                        <!--end::Status--->
-
-                                                        <!--begin::Amount--->
-                                                        <td>
-                                                            207.47.41.60 </td>
-                                                        <!--end::Amount--->
-
-                                                        <!--begin::Date--->
-                                                        <td>
-                                                            last week </td>
-                                                        <!--end::Date--->
-
-                                                        <!--begin::Action--->
-                                                        <td>
-                                                            Expired </td>
-                                                        <!--end::Action--->
-                                                    </tr>
-                                                </tbody>
-                                                <!--end::Table body-->
-                                            </table>
-                                            <!--end::Table-->
-                                        </div>
-                                        <!--end::Table wrapper-->
-                                    </div>
-                                    <!--end::Card body-->
-                                </div>
-                                <!--end::Card-->
-
-                                <!--begin::Card-->
-                                <div class="card pt-4 mb-6 mb-xl-9">
-                                    <!--begin::Card header-->
-                                    <div class="card-header border-0">
-                                        <!--begin::Card title-->
-                                        <div class="card-title">
-                                            <h2>Logs</h2>
-                                        </div>
-                                        <!--end::Card title-->
-
-                                        <!--begin::Card toolbar-->
-                                        <div class="card-toolbar">
-                                            <!--begin::Button-->
-                                            <button type="button" class="btn btn-sm btn-light-primary">
-                                                <!--begin::Svg Icon | path: icons/duotune/files/fil021.svg-->
-                                                <span class="svg-icon svg-icon-3"><svg width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path opacity="0.3"
-                                                            d="M19 15C20.7 15 22 13.7 22 12C22 10.3 20.7 9 19 9C18.9 9 18.9 9 18.8 9C18.9 8.7 19 8.3 19 8C19 6.3 17.7 5 16 5C15.4 5 14.8 5.2 14.3 5.5C13.4 4 11.8 3 10 3C7.2 3 5 5.2 5 8C5 8.3 5 8.7 5.1 9H5C3.3 9 2 10.3 2 12C2 13.7 3.3 15 5 15H19Z"
-                                                            fill="currentColor"></path>
-                                                        <path
-                                                            d="M13 17.4V12C13 11.4 12.6 11 12 11C11.4 11 11 11.4 11 12V17.4H13Z"
-                                                            fill="currentColor"></path>
-                                                        <path opacity="0.3"
-                                                            d="M8 17.4H16L12.7 20.7C12.3 21.1 11.7 21.1 11.3 20.7L8 17.4Z"
-                                                            fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                                Download Report
-                                            </button>
-                                            <!--end::Button-->
-                                        </div>
-                                        <!--end::Card toolbar-->
-                                    </div>
-                                    <!--end::Card header-->
-
-                                    <!--begin::Card body-->
-                                    <div class="card-body py-0">
-                                        <!--begin::Table wrapper-->
-                                        <div class="table-responsive">
-                                            <!--begin::Table-->
-                                            <table
-                                                class="table align-middle table-row-dashed fw-semibold text-gray-600 fs-6 gy-5"
-                                                id="kt_table_users_logs">
-                                                <!--begin::Table body-->
-                                                <tbody>
-                                                    <!--begin::Table row-->
-                                                    <tr>
-                                                        <!--begin::Badge--->
-                                                        <td class="min-w-70px">
-                                                            <div class="badge badge-light-success">200 OK</div>
-                                                        </td>
-                                                        <!--end::Badge--->
-
-                                                        <!--begin::Status--->
-                                                        <td>
-                                                            POST /v1/invoices/in_5200_7752/payment </td>
-                                                        <!--end::Status--->
-
-                                                        <!--begin::Timestamp--->
-                                                        <td class="pe-0 text-end min-w-200px">
-                                                            19 Aug 2023, 9:23 pm </td>
-                                                        <!--end::Timestamp--->
-                                                    </tr>
-                                                    <!--end::Table row-->
-                                                    <!--begin::Table row-->
-                                                    <tr>
-                                                        <!--begin::Badge--->
-                                                        <td class="min-w-70px">
-                                                            <div class="badge badge-light-success">200 OK</div>
-                                                        </td>
-                                                        <!--end::Badge--->
-
-                                                        <!--begin::Status--->
-                                                        <td>
-                                                            POST /v1/invoices/in_8114_6430/payment </td>
-                                                        <!--end::Status--->
-
-                                                        <!--begin::Timestamp--->
-                                                        <td class="pe-0 text-end min-w-200px">
-                                                            21 Feb 2023, 6:05 pm </td>
-                                                        <!--end::Timestamp--->
-                                                    </tr>
-                                                    <!--end::Table row-->
-                                                    <!--begin::Table row-->
-                                                    <tr>
-                                                        <!--begin::Badge--->
-                                                        <td class="min-w-70px">
-                                                            <div class="badge badge-light-success">200 OK</div>
-                                                        </td>
-                                                        <!--end::Badge--->
-
-                                                        <!--begin::Status--->
-                                                        <td>
-                                                            POST /v1/invoices/in_8114_6430/payment </td>
-                                                        <!--end::Status--->
-
-                                                        <!--begin::Timestamp--->
-                                                        <td class="pe-0 text-end min-w-200px">
-                                                            10 Nov 2023, 11:05 am </td>
-                                                        <!--end::Timestamp--->
-                                                    </tr>
-                                                    <!--end::Table row-->
-                                                    <!--begin::Table row-->
-                                                    <tr>
-                                                        <!--begin::Badge--->
-                                                        <td class="min-w-70px">
-                                                            <div class="badge badge-light-danger">500 ERR</div>
-                                                        </td>
-                                                        <!--end::Badge--->
-
-                                                        <!--begin::Status--->
-                                                        <td>
-                                                            POST /v1/invoice/in_8686_9789/invalid </td>
-                                                        <!--end::Status--->
-
-                                                        <!--begin::Timestamp--->
-                                                        <td class="pe-0 text-end min-w-200px">
-                                                            19 Aug 2023, 9:23 pm </td>
-                                                        <!--end::Timestamp--->
-                                                    </tr>
-                                                    <!--end::Table row-->
-                                                    <!--begin::Table row-->
-                                                    <tr>
-                                                        <!--begin::Badge--->
-                                                        <td class="min-w-70px">
-                                                            <div class="badge badge-light-success">200 OK</div>
-                                                        </td>
-                                                        <!--end::Badge--->
-
-                                                        <!--begin::Status--->
-                                                        <td>
-                                                            POST /v1/invoices/in_2557_1418/payment </td>
-                                                        <!--end::Status--->
-
-                                                        <!--begin::Timestamp--->
-                                                        <td class="pe-0 text-end min-w-200px">
-                                                            22 Sep 2023, 11:30 am </td>
-                                                        <!--end::Timestamp--->
-                                                    </tr>
-                                                    <!--end::Table row-->
-                                                </tbody>
-                                                <!--end::Table body-->
-                                            </table>
-                                            <!--end::Table-->
-                                        </div>
-                                        <!--end::Table wrapper-->
-                                    </div>
-                                    <!--end::Card body-->
-                                </div>
-                                <!--end::Card-->
-
                             </div>
                             <!--end:::Tab pane-->
                         </div>
@@ -3507,6 +2481,33 @@
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
+                                        <div class="fv-row mb-7">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span>Address</span>
+                                            </label>
+                                            <!--end::Label-->
+
+                                            <!--begin::Input-->
+                                            <textarea name="address" rows="3" placeholder="Enter user address" class="form-control form-control-solid">{{ $user_data->address }}</textarea>
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        <div class="fv-row mb-7">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span>Contact Number</span>
+                                            </label>
+                                            <!--end::Label-->
+
+                                            <!--begin::Input-->
+                                            <input type="number" class="form-control form-control-solid"
+                                                placeholder="Enter contact number address" name="contact_no" value="{{ $user_data->contact_no }}">
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
                                         @error('role')
                                             <span class="invalid-feedback" role="alert">
                                                 <span>{{ $message }}</span>
@@ -3598,7 +2599,8 @@
                             <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                 <!--begin::Form-->
                                 <form id="kt_modal_add_schedule_form"
-                                    class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
+                                    class="form fv-plugins-bootstrap5 fv-plugins-framework" action="{{ route('users.schedule',$user_data->id) }}" method="POST">
+                                    @csrf
                                     <!--begin::Input group-->
                                     <div class="fv-row mb-7 fv-plugins-icon-container">
                                         <!--begin::Label-->
@@ -3647,7 +2649,7 @@
                                         <div class="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
                                     <!--end::Input group-->
-
+                                    <input type="hidden" name="all_user_list" class="all_user_list" value="{{ $user_data['user_list'] }}">
                                     <!--begin::Input group-->
                                     <div class="fv-row mb-7 fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
                                         <!--begin::Label-->
@@ -3656,27 +2658,9 @@
                                         <!--end::Label-->
 
                                         <!--begin::Input-->
-                                        <tags class="tagify  form-control form-control-solid" tabindex="-1">
-                                            <tag title="smith@kpmg.com" contenteditable="false" spellcheck="false"
-                                                tabindex="-1" class="tagify__tag tagify--noAnim"
-                                                value="smith@kpmg.com">
-                                                <x title="" class="tagify__tag__removeBtn" role="button"
-                                                    aria-label="remove tag"></x>
-                                                <div><span class="tagify__tag-text">smith@kpmg.com</span></div>
-                                            </tag>
-                                            <tag title="melody@altbox.com" contenteditable="false" spellcheck="false"
-                                                tabindex="-1" class="tagify__tag tagify--noAnim"
-                                                value="melody@altbox.com">
-                                                <x title="" class="tagify__tag__removeBtn" role="button"
-                                                    aria-label="remove tag"></x>
-                                                <div><span class="tagify__tag-text">melody@altbox.com</span></div>
-                                            </tag><span contenteditable="" tabindex="0" data-placeholder="​"
-                                                aria-placeholder="" class="tagify__input" role="textbox"
-                                                aria-autocomplete="both" aria-multiline="false"></span>
-                                            ​
-                                        </tags><input id="kt_modal_add_schedule_tagify" type="text"
+                                       <input id="kt_modal_add_schedule_tagify" type="text"
                                             class="form-control form-control-solid" name="event_invitees"
-                                            value="smith@kpmg.com, melody@altbox.com" tabindex="-1">
+                                            value="" tabindex="-1">
                                         <!--end::Input-->
                                         <div class="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
@@ -3690,7 +2674,7 @@
                                         </button>
 
                                         <button type="submit" class="btn btn-primary"
-                                            data-kt-users-modal-action="submit">
+                                            >
                                             <span class="indicator-label">
                                                 Submit
                                             </span>
@@ -3748,7 +2732,8 @@
                             <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                 <!--begin::Form-->
                                 <form id="kt_modal_add_task_form"
-                                    class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
+                                    class="form fv-plugins-bootstrap5 fv-plugins-framework" action="{{ route('users.task_create',$user_data->id) }}" method="POST">
+                                    @csrf
                                     <!--begin::Input group-->
                                     <div class="fv-row mb-7 fv-plugins-icon-container">
                                         <!--begin::Label-->
@@ -3756,7 +2741,7 @@
                                         <!--end::Label-->
 
                                         <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-solid" name="task_name"
+                                        <input type="text" class="form-control form-control-solid" name="name"
                                             value="">
                                         <!--end::Input-->
                                         <div class="fv-plugins-message-container invalid-feedback"></div>
@@ -3777,7 +2762,7 @@
 
                                         <!--begin::Input-->
                                         <input class="form-control form-control-solid flatpickr-input"
-                                            placeholder="Pick date" name="task_duedate"
+                                            placeholder="Pick date" name="duedate"
                                             id="kt_modal_add_task_datepicker" type="text" readonly="readonly">
                                         <!--end::Input-->
                                         <div class="fv-plugins-message-container invalid-feedback"></div>
@@ -3791,7 +2776,7 @@
                                         <!--end::Label-->
 
                                         <!--begin::Input-->
-                                        <textarea class="form-control form-control-solid rounded-3"></textarea>
+                                        <textarea class="form-control form-control-solid rounded-3" name="description"></textarea>
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
@@ -3804,7 +2789,7 @@
                                         </button>
 
                                         <button type="submit" class="btn btn-primary"
-                                            data-kt-users-modal-action="submit">
+                                           >
                                             <span class="indicator-label">
                                                 Submit
                                             </span>
@@ -4502,10 +3487,9 @@
                                             Cancel
                                         </button>
 
-                                        <button type="submit" class="btn btn-primary"
-                                            data-kt-users-modal-action="submit">
+                                        <button type="submit" class="btn btn-primary">
                                             <span class="indicator-label">
-                                                Submit
+                                                Submit 1
                                             </span>
                                             <span class="indicator-progress">
                                                 Please wait... <span
@@ -4535,4 +3519,6 @@
 
 @section('script_file')
     <script src="{{ asset('/assets/js/users/show_hide_modal.js') }}"></script>
+    <script src="{{ asset('/assets/js/custom/apps/user-management/users/view/add-task.js') }}"></script>
+    <script src="{{ asset('/assets/js/custom/apps/user-management/users/view/add-schedule.js') }}"></script>
 @endsection

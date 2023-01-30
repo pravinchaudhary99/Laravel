@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/roles/{id}',[RoleController::class,'index'])->name('role_data');
 Route::post('/users',[UserController::class,'index'])->name('user_table');
+Route::post('/login_session',[UserController::class,'login_session'])->name('login_session');

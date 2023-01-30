@@ -65,8 +65,8 @@ var KTUsersAddTask = function () {
                 }
             }).then(function (result) {
                 if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal				
+                    form.reset(); // Reset form
+                    modal.hide(); // Hide modal
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
@@ -99,8 +99,8 @@ var KTUsersAddTask = function () {
                 }
             }).then(function (result) {
                 if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal				
+                    form.reset(); // Reset form
+                    modal.hide(); // Hide modal
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
@@ -115,64 +115,6 @@ var KTUsersAddTask = function () {
             });
         });
 
-        // Submit button handler
-        const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
-        submitButton.addEventListener('click', function (e) {
-            // Prevent default button action
-            e.preventDefault();
-
-            // Validate form before submit
-            if (validator) {
-                validator.validate().then(function (status) {
-                    console.log('validated!');
-
-                    if (status == 'Valid') {
-                        // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
-
-                        // Disable button to avoid multiple click 
-                        submitButton.disabled = true;
-
-                        // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        setTimeout(function () {
-                            // Remove loading indication
-                            submitButton.removeAttribute('data-kt-indicator');
-
-                            // Enable button
-                            submitButton.disabled = false;
-
-                            // Show popup confirmation 
-                            Swal.fire({
-                                text: "Form has been successfully submitted!",
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                }
-                            }).then(function (result) {
-                                if (result.isConfirmed) {
-                                    modal.hide();
-                                }
-                            });
-
-                            //form.submit(); // Submit form
-                        }, 2000);
-                    } else {
-                        // Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
-                    }
-                });
-            }
-        });
     }
 
     // Init update task status
@@ -232,7 +174,7 @@ var KTUsersAddTask = function () {
                     }
                 }).then(function (result) {
                     if (result.value) {
-                        taskForm.reset(); // Reset form		
+                        taskForm.reset(); // Reset form
                         el.hide();
                     } else if (result.dismiss === 'cancel') {
                         Swal.fire({
@@ -261,7 +203,7 @@ var KTUsersAddTask = function () {
                             // Show loading indication
                             submitButton.setAttribute('data-kt-indicator', 'on');
 
-                            // Disable button to avoid multiple click 
+                            // Disable button to avoid multiple click
                             submitButton.disabled = true;
 
                             // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
@@ -272,7 +214,7 @@ var KTUsersAddTask = function () {
                                 // Enable button
                                 submitButton.disabled = false;
 
-                                // Show popup confirmation 
+                                // Show popup confirmation
                                 Swal.fire({
                                     text: "Form has been successfully submitted!",
                                     icon: "success",

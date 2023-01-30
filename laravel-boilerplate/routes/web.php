@@ -49,11 +49,14 @@ Route::group(['middleware'=>'auth','prefix'=>'users','as'=>'users.'],function ()
     Route::get('/view/{id}',[UserController::class,'edit'])->name('edit');
     Route::put('/update/{id}',[UserController::class,'update'])->name('update');
     Route::delete('/delete/{id}',[UserController::class,'delete'])->name('delete');
+    Route::post('/task/{id}',[UserController::class,'task_create'])->name('task_create');
+    Route::post('/schedule/{id}',[UserController::class,'schedule'])->name('schedule');
 });
 
 Route::group(['middleware' => 'auth','prefix'=>'user_auth','as'=>'user_auth.'],function(){
     Route::get('/',[UserAuthController::class ,'index'])->name('index');
     Route::get('/setting/{id}',[UserAuthController::class ,'setting'])->name('setting');
-    Route::get('/logs/{id}',[UserAuthController::class ,'logs'])->name('logs');
+    Route::put('/update/{id}',[UserAuthController::class,'update'])->name('update');
 });
 
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
