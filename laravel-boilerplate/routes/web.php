@@ -50,7 +50,7 @@ Route::group(['middleware'=>'auth','prefix'=>'users','as'=>'users.'],function ()
     Route::put('/update/{id}',[UserController::class,'update'])->name('update');
     Route::delete('/delete/{id}',[UserController::class,'delete'])->name('delete');
     Route::post('/task/{id}',[UserController::class,'task_create'])->name('task_create');
-    Route::post('/schedule/{id}',[UserController::class,'schedule'])->name('schedule');
+    Route::put('/task/update/{id}',[UserController::class,'task_update'])->name('task_update');
 });
 
 Route::group(['middleware' => 'auth','prefix'=>'user_auth','as'=>'user_auth.'],function(){
@@ -60,3 +60,5 @@ Route::group(['middleware' => 'auth','prefix'=>'user_auth','as'=>'user_auth.'],f
 });
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
+

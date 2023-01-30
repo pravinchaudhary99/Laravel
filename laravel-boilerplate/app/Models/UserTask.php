@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class UserTask extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'name',
         'due_date',

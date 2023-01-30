@@ -4,8 +4,8 @@
 <head>
 		<title>Weboccult | Sign in</title>
 		<meta charset="utf-8" />
-		  
-		 
+
+
 		<link rel="shortcut icon" href="assets/media/logos/default-small.png" />
 		<!--begin::Fonts(mandatory for all pages)-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -23,7 +23,7 @@
 	<!--end::Head-->
 	<!--begin::Body-->
 	<body id="kt_body" class="app-blank app-blank">
-		
+
 		<!--End::Google Tag Manager (noscript) -->
 		<!--begin::Root-->
 		<div class="d-flex flex-column flex-root" id="kt_app_root">
@@ -41,7 +41,7 @@
 						<!--begin::Image-->
 						<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="{{ asset('assets/media/auth/boy-with-rocket-light.png') }}" alt="" />
 						<!--end::Image-->
-						
+
 					</div>
 					<!--end::Content-->
 				</div>
@@ -69,6 +69,27 @@
 									<!--end::Title-->
 								</div>
 								<!--begin::Heading-->
+								<!--begin::Login options-->
+								<div class="row g-3 mb-9">
+									<!--begin::Col-->
+									<div class="col-md-6">
+										<!--begin::Google link=-->
+										<a href="" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+										<img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-15px me-3" />Sign in with Google</a>
+										<!--end::Google link=-->
+									</div>
+									<!--end::Col-->
+									<!--begin::Col-->
+									<div class="col-md-6">
+										<!--begin::Google link=-->
+										<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+										<img alt="Logo" src="assets/media/svg/brand-logos/apple-black.svg" class="theme-light-show h-15px me-3" />
+										<img alt="Logo" src="assets/media/svg/brand-logos/apple-black-dark.svg" class="theme-dark-show h-15px me-3" />Sign in with Apple</a>
+										<!--end::Google link=-->
+									</div>
+									<!--end::Col-->
+								</div>
+								<!--end::Login options-->
 								{{-- @if(session()->has('error'))
 									<div class="text-gray-500 text-center fw-semibold fs-6">
 										<span style="color: rgb(240, 71, 71); text-aline:center;"> {!! \Session::get('error') !!}</span>
@@ -117,14 +138,14 @@
 										<span class="indicator-label">Sign In</span>
 										<!--end::Indicator label-->
 										<!--begin::Indicator progress-->
-										<span class="indicator-progress">Please wait... 
+										<span class="indicator-progress">Please wait...
 										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 										<!--end::Indicator progress-->
 									</button>
 								</div>
 								<!--end::Submit button-->
 								<!--begin::Sign up-->
-								<div class="text-gray-500 text-center fw-semibold fs-6">Not a Member yet? 
+								<div class="text-gray-500 text-center fw-semibold fs-6">Not a Member yet?
 								<a href="{{ route('register.index') }}" class="link-primary">Sign up</a></div>
 								<!--end::Sign up-->
 							</form>
@@ -134,11 +155,11 @@
 					</div>
 					<!--end::Form-->
 					<!--begin::Footer-->
-					
+
 					<!--end::Footer-->
 				</div>
 				<!--end::Body-->
-				
+
 			</div>
 			<!--end::Authentication - Sign-in-->
 		</div>
@@ -155,7 +176,7 @@
 		<!--end::Javascript-->
 	</body>
 	<!--end::Body-->
-	
+
 
 <!-- Mirrored from preview.keenthemes.com/authentication/layouts/corporate/sign-in.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Nov 2022 05:02:02 GMT -->
 </html>

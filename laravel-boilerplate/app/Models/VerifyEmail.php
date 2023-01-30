@@ -9,7 +9,6 @@ class VerifyEmail extends Model
 {
     use HasFactory;
     protected $fillable = [
-    
         'email',
         'otp',
     ];

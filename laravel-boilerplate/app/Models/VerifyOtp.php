@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class VerifyOtp extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'email',
         'otp',
-        
     ];
 }

@@ -7,17 +7,14 @@ use DateTime;
 use App\Models\Role;
 use App\Models\User;
 use App\Mail\VerifyUser;
-use App\Models\LoginSession;
-use App\Models\VerifyOtp;
 use App\Models\VerifyEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Stevebauman\Location\Facades\Location;
-use Illuminate\Support\Carbon;
 
 class AuthenticateController extends Controller
 {
@@ -62,10 +59,6 @@ class AuthenticateController extends Controller
                 return view('authenticate.verify_email',compact('verify_id'));
             }else{
                 if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-                    $device =  $request->header('sec-ch-ua-platform');
-                    $data = Location::get('https://'.$request->ip());
-                    $session_list = ['ip_address' => $request->ip(),'location' => $data->countryName,'device'=>$device,'date_time'=>Carbon::now('Asia/Kolkata')->format('Y-m-d/H:i:s'),'user_id'=>auth()->user()->id];
-                    LoginSession::create($session_list);
                     return redirect()->route('home.index');
                 }
                 else{
@@ -116,8 +109,8 @@ class AuthenticateController extends Controller
         $email = $request->email;
         $otp = $this->GernreteOTP();
 
-        $verify_data = VerifyOtp::create(['email'=>$request->email,'otp'=>$otp]);
-        $verify_id = $verify_data->id;
+        // $verify_data = VerifyOtp::create(['email'=>$request->email,'otp'=>$otp]);
+        // $verify_id = $verify_data->id;
         $verify = 'Email verify';
         Mail::to('chaudharypravinbhai944@gmail.com')->send(new VerifyUser ($verify,'Verfiy otp',$otp));
         return view('authenticate.two_staps',compact('verify_id'));
@@ -154,13 +147,13 @@ class AuthenticateController extends Controller
     {
         $verify_id = trim($request->verify_id);
         $ver_otp = implode($request->verify_otp);
-        if(VerifyOtp::where(['id'=>$verify_id,'otp'=>$ver_otp])->exists()){
-            $email = VerifyOtp::where(['id'=>$verify_id,'otp'=>$ver_otp])->value('email');
-            VerifyOtp::where('id',$verify_id)->delete();
-            return view('authenticate.change_password',compact('email'));
-        }else{
-            return view('authenticate.verify_email',compact('verify_id'))->with('error','please enter correct otp');
-        }
+        // if(VerifyOtp::where(['id'=>$verify_id,'otp'=>$ver_otp])->exists()){
+        //     $email = VerifyOtp::where(['id'=>$verify_id,'otp'=>$ver_otp])->value('email');
+        //     VerifyOtp::where('id',$verify_id)->delete();
+        //     return view('authenticate.change_password',compact('email'));
+        // }else{
+        //     return view('authenticate.verify_email',compact('verify_id'))->with('error','please enter correct otp');
+        // }
     }
 
     public function change_password(Request $request)

@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
-use App\Models\LoginSession;
 use App\Models\UserSchedule;
 use App\Models\UserTask;
 use Exception;
@@ -49,9 +48,7 @@ class UserController extends Controller
         $user = true;
         $user_data = User::find($id);
         $role_list = Role::get();
-        $last_login = LoginSession::where('user_id',$id)->latest()->value('date_time');
         $role_name = Role::where('id',$user_data->role_id)->value('name');
-        $user_data['last_login'] = $last_login;
         $user_data['user_list'] = json_encode(User::pluck('email')->toArray());
         $user_task = UserTask::where('user_id',$id)->get();
         return view('users.user_view',compact('user','user_data','role_list','role_name','user_task'));
@@ -126,22 +123,13 @@ class UserController extends Controller
         ]);
         return redirect()->back();
     }
-    public function schedule(Request $request,$id)
+
+
+    public function task_update(Request $request,$id)
     {
-        $validator = Validator::make($request->all(), [
-            "event_name" => 'required',
-            "event_datetime" => 'required',
-            "event_org" => 'required',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput()->with('error','Please fill the all filed!');
-        }
-        UserSchedule::create([
-            'event_name' => $request->event_name,
-            'date_time' => $request->event_datetime,
-            'event_organiser' => $request->event_org,
-            'send_event_details_to' => $request->event_invitees,
-            'user_id' => $id
+        $status = $request->task_status;
+        UserTask::where('user_id', $id)->update([
+            'status' => $status
         ]);
         return redirect()->back();
     }

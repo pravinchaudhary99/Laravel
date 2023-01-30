@@ -6,14 +6,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
-        "fedeisas/laravel-mail-css-inliner": "^5.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "logtail/monolog-logtail": "^0.1.5",
-        "rap2hpoutre/laravel-log-viewer": "^2.2",
-        "stevebauman/location": "^6.5"
+        "rap2hpoutre/laravel-log-viewer": "^2.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -64,6 +61,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

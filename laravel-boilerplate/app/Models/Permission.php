@@ -9,7 +9,6 @@ use App\Traits\Uuids;
 class Permission extends Model
 {
     use HasFactory,Uuids;
-
     protected $fillable = [
         'name',
         'key',

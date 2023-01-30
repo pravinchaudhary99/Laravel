@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class Handler extends ExceptionHandler
 {
@@ -47,4 +48,19 @@ class Handler extends ExceptionHandler
             //
         });
     }
+    public function render($request, Throwable $exception)
+    {
+        // return parent::render($request, $exception);
+        if ($exception instanceof HttpExceptionInterface) {
+            if ($exception->getStatusCode() == 404){
+                return response()->view('errors.404', [], $exception->getStatusCode());
+            }
+            if ($exception->getStatusCode() == 500){
+                return response()->view('errors.505', [], $exception->getStatusCode());
+            }
+        }
+        return parent::render($request, $exception);
+    }
+
+
 }
