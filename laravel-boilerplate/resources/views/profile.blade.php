@@ -67,59 +67,7 @@
         <!--end::Card body-->
     </div>
     <!--end::details View-->
-    <!--begin::Login sessions-->
-    <div class="card mb-5 mb-lg-10">
-        <!--begin::Card header-->
-        <div class="card-header">
-            <!--begin::Heading-->
-            <div class="card-title">
-                <h3>Login Sessions</h3>
-            </div>
-            <!--end::Heading-->
-           <!--begin::Card title-->
-           <div class="card-title">
-            <!--begin::Search-->
-            <div class="d-flex align-items-center position-relative my-1">
-                <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                        <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
-                    </svg>
-                </span>
-                <!--end::Svg Icon-->
-                <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Login session" />
-            </div>
-            <!--end::Search-->
-        </div>
-        <!--begin::Card title-->
-        </div>
-        <!--end::Card header-->
-        <!--begin::Card body-->
-        <div class="card-body pt-0">
-            <!--begin::Table wrapper-->
-            <div class="table-responsive">
-                <!--begin::Table-->
-                <table class="table table-flush align-middle table-row-bordered table-row-solid gy-4 gs-9" id="login_sessions_data_table">
-                    <!--begin::Thead-->
-                    <thead class="border-gray-200 fs-5 fw-semibold bg-lighten">
-                        <tr>
-                            <th class="min-w-250px">Location</th>
-                            <th class="min-w-150px">Device</th>
-                            <th class="min-w-150px">IP Address</th>
-                            <th class="min-w-150px">Time</th>
-                        </tr>
-                    </thead>
-                    <!--end::Thead-->
 
-                </table>
-                <!--end::Table-->
-            </div>
-            <!--end::Table wrapper-->
-        </div>
-        <!--end::Card body-->
-    </div>
-    <!--end::Login sessions-->
      <!--begin::Modal - Update user details-->
      <div class="modal fade" id="kt_modal_add_customer" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
@@ -358,5 +306,4 @@
 @endsection
 @section('script_file')
     <script src="{{ asset('/assets/js/users/show_hide_modal.js') }}"></script>
-    <script src="{{ asset('/assets/js/users/auth_login.js') }}"></script>
 @endsection

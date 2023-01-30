@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\AuthenticateController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -61,4 +63,5 @@ Route::group(['middleware' => 'auth','prefix'=>'user_auth','as'=>'user_auth.'],f
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
-
+Route::get('login/google', [LoginController::class, 'login']);
+Route::get('login/google/callback', [LoginController::class, 'callback']);
