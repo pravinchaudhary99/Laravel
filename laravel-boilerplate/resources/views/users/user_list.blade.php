@@ -55,7 +55,11 @@
                 <!--end::Breadcrumb-->
             </div>
             <!--end::Page title-->
-
+            <div class="d-flex align-items-center gap-2 gap-lg-3">
+                <!--begin::Primary button-->
+                <a href="{{ route('sendMail') }}" class="btn btn-sm fw-bold btn-primary">Send Mail</a>
+                <!--end::Primary button-->
+            </div>
         </div>
         <!--end::Toolbar container-->
     </div>

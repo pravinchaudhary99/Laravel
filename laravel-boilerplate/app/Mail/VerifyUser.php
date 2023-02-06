@@ -41,7 +41,4 @@ class VerifyUser extends Mailable
             "verify" =>$this->verify
         ]);
     }
-
-
-
 }

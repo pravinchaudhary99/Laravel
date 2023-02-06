@@ -6,6 +6,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\AuthenticateController;
+use App\Http\Controllers\StoreFileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,3 +66,10 @@ Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'i
 
 Route::get('login/google', [LoginController::class, 'login']);
 Route::get('login/google/callback', [LoginController::class, 'callback']);
+Route::get('email', function () {
+    return view('email');
+});
+Route::get('sendmail', [StoreFileController::class, 'index'])->name('sendMail');
+Route::post('storeFile', [StoreFileController::class, 'storeFile'])->name('storeFile');
+Route::post('fileDestroy', [StoreFileController::class,'fileDestroy'])->name('destroyFile');
+Route::post('storeFormdata', [StoreFileController::class, 'storeFormData'])->name('storeFormData');

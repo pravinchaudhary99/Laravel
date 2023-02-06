@@ -33,9 +33,6 @@ var KTAppInboxCompose = function () {
         const ccElement = el.querySelector('[data-kt-inbox-form="cc"]');
         const ccButton = el.querySelector('[data-kt-inbox-form="cc_button"]');
         const ccClose = el.querySelector('[data-kt-inbox-form="cc_close"]');
-        const bccElement = el.querySelector('[data-kt-inbox-form="bcc"]');
-        const bccButton = el.querySelector('[data-kt-inbox-form="bcc_button"]');
-        const bccClose = el.querySelector('[data-kt-inbox-form="bcc_close"]');
 
         // Handle CC button click
         ccButton.addEventListener('click', e => {
@@ -53,21 +50,7 @@ var KTAppInboxCompose = function () {
             ccElement.classList.remove('d-flex');
         });
 
-        // Handle BCC button click
-        bccButton.addEventListener('click', e => {
-            e.preventDefault();
 
-            bccElement.classList.remove('d-none');
-            bccElement.classList.add('d-flex');
-        });
-
-        // Handle CC close button click
-        bccClose.addEventListener('click', e => {
-            e.preventDefault();
-
-            bccElement.classList.add('d-none');
-            bccElement.classList.remove('d-flex');
-        });
     }
 
     // Handle submit form
@@ -86,77 +69,45 @@ var KTAppInboxCompose = function () {
         });
     }
 
-    // Init tagify 
+    // Init tagify
     const initTagify = (el) => {
         var inputElm = el;
 
-        const usersList = [
-            { value: 1, name: 'Emma Smith', avatar: 'avatars/300-6.jpg', email: 'e.smith@kpmg.com.au' },
-            { value: 2, name: 'Max Smith', avatar: 'avatars/300-1.jpg', email: 'max@kt.com' },
-            { value: 3, name: 'Sean Bean', avatar: 'avatars/300-5.jpg', email: 'sean@dellito.com' },
-            { value: 4, name: 'Brian Cox', avatar: 'avatars/300-25.jpg', email: 'brian@exchange.com' },
-            { value: 5, name: 'Francis Mitcham', avatar: 'avatars/300-9.jpg', email: 'f.mitcham@kpmg.com.au' },
-            { value: 6, name: 'Dan Wilson', avatar: 'avatars/300-23.jpg', email: 'dam@consilting.com' },
-            { value: 7, name: 'Ana Crown', avatar: 'avatars/300-12.jpg', email: 'ana.cf@limtel.com' },
-            { value: 8, name: 'John Miller', avatar: 'avatars/300-13.jpg', email: 'miller@mapple.com' }
-        ];
-
-        function tagTemplate(tagData) {
-            return `
-                <tag title="${(tagData.title || tagData.email)}"
-                        contenteditable='false'
-                        spellcheck='false'
-                        tabIndex="-1"
-                        class="${this.settings.classNames.tag} ${tagData.class ? tagData.class : ""}"
-                        ${this.getAttributes(tagData)}>
-                    <x title='' class='tagify__tag__removeBtn' role='button' aria-label='remove tag'></x>
-                    <div class="d-flex align-items-center">
-                        <div class='tagify__tag__avatar-wrap ps-0'>
-                            <img onerror="this.style.visibility='hidden'" class="rounded-circle w-25px me-2" src="${hostUrl}media/${tagData.avatar}">
-                        </div>
-                        <span class='tagify__tag-text'>${tagData.name}</span>
-                    </div>
-                </tag>
-            `
-        }
-
-        function suggestionItemTemplate(tagData) {
-            return `
-                <div ${this.getAttributes(tagData)}
-                    class='tagify__dropdown__item d-flex align-items-center ${tagData.class ? tagData.class : ""}'
-                    tabindex="0"
-                    role="option">
-
-                    ${tagData.avatar ? `
-                            <div class='tagify__dropdown__item__avatar-wrap me-2'>
-                                <img onerror="this.style.visibility='hidden'"  class="rounded-circle w-50px me-2" src="${hostUrl}media/${tagData.avatar}">
-                            </div>` : ''
-                }
-
-                    <div class="d-flex flex-column">
-                        <strong>${tagData.name}</strong>
-                        <span>${tagData.email}</span>
-                    </div>
-                </div>
-            `
-        }
-
         // initialize Tagify on the above input node reference
         var tagify = new Tagify(inputElm, {
-            tagTextProp: 'name', // very important since a custom template is used with this property as text. allows typing a "value" or a "name" to match input with whitelist
-            enforceWhitelist: true,
-            skipInvalid: true, // do not remporarily add invalid tags
-            dropdown: {
-                closeOnSelect: false,
-                enabled: 0,
-                classname: 'users-list',
-                searchKeys: ['name', 'email']  // very important to set by which keys to search for suggesttions when typing
-            },
+            delimiters: ", ", // very important since a custom template is used with this property as text. allows typing a "value" or a "name" to match input with whitelist
+            maxTags: 10,
+            blacklist: ["fuck", "shit", "pussy"],
+            keepInvalidTags: true, // do not remove invalid tags (but keep them marked as invalid)
             templates: {
-                tag: tagTemplate,
-                dropdownItem: suggestionItemTemplate
+                dropdownItem: function(tagData) {
+                    try {
+                        var html = '';
+
+                        html += '<div class="tagify__dropdown__item">';
+                        html += '   <div class="d-flex align-items-center">';
+                        html += '       <span class="symbol sumbol-' + (tagData.initialsState ? tagData.initialsState : '') + ' mr-2">';
+                        html += '           <span class="symbol-label" style="background-image: url(\''+ (tagData.pic ? tagData.pic : '') + '\')">' + (tagData.initials ? tagData.initials : '') + '</span>';
+                        html += '       </span>';
+                        html += '       <div class="d-flex flex-column">';
+                        html += '           <a href="#" class="text-dark-75 text-hover-primary font-weight-bold">'+ (tagData.value ? tagData.value : '') + '</a>';
+                        html += '           <span class="text-muted font-weight-bold">' + (tagData.email ? tagData.email : '') + '</span>';
+                        html += '       </div>';
+                        html += '   </div>';
+                        html += '</div>';
+
+                        return html;
+                    } catch (err) {}
+                }
             },
-            whitelist: usersList
+            transformTag: function(tagData) {
+                tagData.class = 'tagify__tag tagify__tag--primary';
+            },
+            dropdown: {
+                classname: "color-blue",
+                enabled: 1,
+                maxItems: 5
+            }
         })
 
         tagify.on('dropdown:show dropdown:updated', onDropdownShow)
@@ -194,16 +145,16 @@ var KTAppInboxCompose = function () {
         }
     }
 
-    // Init quill editor 
+    // Init quill editor
     const initQuill = (el) => {
         var quill = new Quill('#kt_inbox_form_editor', {
             modules: {
                 toolbar: [
                     [{
-                        header: [1, 2, false]
+                        header: [1, 2, 3, 4, 5, 6, false]
                     }],
                     ['bold', 'italic', 'underline'],
-                    ['image', 'code-block']
+                    ['image', 'code-block'],
                 ]
             },
             placeholder: 'Type your text here...',
@@ -233,12 +184,36 @@ var KTAppInboxCompose = function () {
         previewNode.parentNode.removeChild(previewNode);
 
         var myDropzone = new Dropzone(id, { // Make the whole body a dropzone
-            url: "https://preview.keenthemes.com/api/dropzone/void.php", // Set the url for your upload script location
+            url: '/storeFile/', // Set the url for your upload script location
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             parallelUploads: 20,
             maxFilesize: 1, // Max filesize in MB
             previewTemplate: previewTemplate,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif,application/pdf",
             previewsContainer: id + " .dropzone-items", // Define the container to display the previews
-            clickable: uploadButton // Define the element that should be used as click trigger to select files.
+            clickable: uploadButton, // Define the element that should be used as click trigger to select files.
+            success: function(file, response){
+                var fileName = response['success'];
+                var className = file.name.split('.')[0].replace(/\s/g, '_').replace(/[\W]+/g,'');
+                var length = $(".dropzone-item").length;
+                var html = `<input name="storeFiles[]" class="${className}_input"  value="${fileName}" hidden />`;
+                $(".dropzone-item").eq(length-1).addClass(className+fileName.split(".")[0])
+                return $(".dropzone-item").eq(length-1).find('div.dropzone-file').append(html);
+            },
+            removedfile: function(file) {
+                var className = file.name.split('.')[0].replace(/\s/g, '_').replace(/[\W]+/g,'');
+                var imageName = $(`input[class='${className}_input']`).val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/fileDestroy/',
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    data: {filename: imageName},
+                    success: function (data){
+                        $(`.${className+data.split(".")[0]}`).remove();
+                        console.log("File has been successfully removed!!");
+                    },
+                });
+            }
         });
 
 
@@ -277,7 +252,12 @@ var KTAppInboxCompose = function () {
                 });
             }, 300);
         });
+
+        $(document).on("click",".dropzone-delete",function(){
+            console.log("here!");
+        });
     }
+
 
 
     // Public methods
